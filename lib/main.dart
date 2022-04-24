@@ -22,7 +22,7 @@ class Main extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "D2Coding",
         textTheme: Theme.of(context).textTheme.apply(
-              fontSizeFactor: 1.35,
+              fontSizeFactor: 1.5,
               bodyColor: Colors.white,
               displayColor: Colors.white,
             ),
