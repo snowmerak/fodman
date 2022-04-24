@@ -39,7 +39,52 @@ class LocalImageDetailPage extends StatelessWidget {
                       TableCell(
                         child: Text('Names'),
                       ),
-                      TableCell(child: Text(image.names?.join("\n") ?? "")),
+                      TableCell(
+                        child: Column(
+                          children: (image.names ?? []).map((e) {
+                            return Row(
+                              children: [
+                                Text(e),
+                                SizedBox(
+                                  width: 16.0,
+                                ),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.red),
+                                  ),
+                                  onPressed: () async {
+                                    var result = await controller.rmImage(e);
+                                    if (result.item1 != "") {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text("Removed"),
+                                            content: Text(result.item1),
+                                          );
+                                        },
+                                      );
+                                      controller.loadImages();
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text("Error"),
+                                            content: Text(result.item2),
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                                  child: Text("remove"),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ),
                     ],
                   ),
                   TableRow(

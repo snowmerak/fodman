@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'dart:io';
 
+import 'package:tuple/tuple.dart';
+
 class LocalImage {
   String? id;
   String? parentId;
@@ -95,4 +97,9 @@ Future<List<LocalImage>> getImages() async {
     return LocalImage.fromJson(element);
   }).toList();
   return data;
+}
+
+Future<Tuple2<String, String>> removeImage(String name) async {
+  var result = Process.runSync("podman", ["image", "rm", name]);
+  return Tuple2(result.stdout.toString(), result.stderr.toString());
 }
