@@ -8,6 +8,8 @@ class LocalImageController extends GetxController {
   Map<String, LocalImage> images = {};
   List<String> imagesKeys = [];
   LocalImage? selectedImage;
+  String? errorTitle;
+  String? errorMessage;
 
   Future<void> loadImages() async {
     getImages().then((resp) {
@@ -19,12 +21,9 @@ class LocalImageController extends GetxController {
       imagesKeys = images.keys.toList();
       update();
     }).onError((error, stackTrace) {
-      Get.dialog(
-        AlertDialog(
-          title: Text(error.toString()),
-          content: Text(stackTrace.toString()),
-        ),
-      );
+      errorTitle = error.toString();
+      errorMessage = stackTrace.toString();
+      update();
     });
   }
 }
