@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:tuple/tuple.dart';
+
 class RemoteImage {
   String? index;
   String? name;
@@ -49,4 +51,9 @@ Future<List<RemoteImage>> searchImage(String keyword) async {
     return RemoteImage.fromJson(element);
   }).toList();
   return data;
+}
+
+Future<Tuple2<String, String>> pullImage(String name, String tag) async {
+  var result = Process.runSync("podman", ["image", "pull", "$name:$tag"]);
+  return Tuple2(result.stdout.toString(), result.stderr.toString());
 }
