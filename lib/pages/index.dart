@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
+import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:get/get.dart';
 
 class IndexPage extends StatelessWidget {
@@ -58,6 +59,17 @@ class IndexPage extends StatelessWidget {
                   ),
                   child: const Text('Local Images'),
                   onPressed: () => Get.toNamed(localImageListPage),
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        colors[Random().nextInt(colors.length)]),
+                  ),
+                  child: const Text('Search Image'),
+                  onPressed: () => Get.toNamed(remoteImageListPage),
                 ),
               ],
             ),
