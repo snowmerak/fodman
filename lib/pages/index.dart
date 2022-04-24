@@ -26,12 +26,13 @@ class IndexPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Index'),
+        title: const Text('Fodman'),
       ),
       body: Container(
         margin: EdgeInsets.all(12.0),
         child: Row(
           children: [
+            Spacer(),
             Column(
               children: [
                 Text(
@@ -41,7 +42,7 @@ class IndexPage extends StatelessWidget {
               ],
             ),
             SizedBox(
-              width: 32.0,
+              width: 48.0,
             ),
             Column(
               children: [
@@ -50,7 +51,7 @@ class IndexPage extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 12.0,
+                  height: 32.0,
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
@@ -61,7 +62,7 @@ class IndexPage extends StatelessWidget {
                   onPressed: () => Get.toNamed(localImageListPage),
                 ),
                 SizedBox(
-                  height: 12.0,
+                  height: 32.0,
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
@@ -73,6 +74,7 @@ class IndexPage extends StatelessWidget {
                 ),
               ],
             ),
+            Spacer(),
           ],
         ),
       ),
