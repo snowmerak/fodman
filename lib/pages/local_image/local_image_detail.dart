@@ -29,7 +29,7 @@ class LocalImageDetailPage extends StatelessWidget {
                 },
                 border: TableBorder(
                   horizontalInside: BorderSide(
-                    color: Colors.black12,
+                    color: Colors.white12,
                     width: 1.0,
                   ),
                 ),
