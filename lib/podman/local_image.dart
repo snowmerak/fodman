@@ -89,7 +89,7 @@ class Labels {
   }
 }
 
-List<LocalImage> getImages() {
+Future<List<LocalImage>> getImages() async {
   var result = Process.runSync("podman", ["image", "list", "--format", "json"]);
   var data = (json.decode(result.stdout) as List<dynamic>).map((element) {
     return LocalImage.fromJson(element);
