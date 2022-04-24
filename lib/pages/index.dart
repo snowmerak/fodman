@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fodman/pages/local_image_list.dart';
+import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:get/get.dart';
 
 class IndexPage extends StatelessWidget {
