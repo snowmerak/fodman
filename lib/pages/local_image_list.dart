@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fodman/podman/local_image.dart';
 
-class ImageListPage extends StatelessWidget {
-  const ImageListPage({Key? key}) : super(key: key);
+const localImageListPage = '/local_image_list';
+
+class LocalImageListPage extends StatelessWidget {
+  const LocalImageListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

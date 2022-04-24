@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:fodman/pages/image_list.dart';
+import 'package:fodman/pages/local_image_list.dart';
 import 'package:get/get.dart';
 
 import 'pages/index.dart';
@@ -20,7 +20,7 @@ class Main extends StatelessWidget {
       initialRoute: "/",
       getPages: [
         GetPage(name: "/", page: () => IndexPage()),
-        GetPage(name: "/image_list", page: () => ImageListPage()),
+        GetPage(name: localImageListPage, page: () => LocalImageListPage()),
       ],
     );
   }
