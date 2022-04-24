@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 class RemoteImage {
   String? index;
   String? name;
@@ -37,4 +40,13 @@ class RemoteImage {
     data['Tag'] = tag;
     return data;
   }
+}
+
+List<RemoteImage> searchImage(String keyword) {
+  var result =
+      Process.runSync("podman", ["search", keyword, "--format", "json"]);
+  var data = (json.decode(result.stdout) as List<dynamic>).map((element) {
+    return RemoteImage.fromJson(element);
+  }).toList();
+  return data;
 }
