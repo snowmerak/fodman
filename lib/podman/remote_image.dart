@@ -42,7 +42,7 @@ class RemoteImage {
   }
 }
 
-List<RemoteImage> searchImage(String keyword) {
+Future<List<RemoteImage>> searchImage(String keyword) async {
   var result =
       Process.runSync("podman", ["search", keyword, "--format", "json"]);
   var data = (json.decode(result.stdout) as List<dynamic>).map((element) {
