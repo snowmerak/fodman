@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fodman/pages/local_image_list.dart';
 import 'package:get/get.dart';
 
 class IndexPage extends StatelessWidget {
@@ -13,7 +14,7 @@ class IndexPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
             onPressed: () {
-              Get.toNamed('/image_list');
+              Get.toNamed(localImageListPage);
             },
             child: const Text('Go to Image List')),
       ),
