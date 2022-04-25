@@ -50,6 +50,7 @@ Future<List<RemoteImage>> searchImage(String keyword) async {
   var data = (json.decode(result.stdout) as List<dynamic>).map((element) {
     return RemoteImage.fromJson(element);
   }).toList();
+  data.sort((a, b) => (a.name ?? "").compareTo(b.name ?? ""));
   return data;
 }
 
