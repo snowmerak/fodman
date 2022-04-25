@@ -51,7 +51,7 @@ class RemoteImageListPage extends StatelessWidget {
                       subtitle: Text(controller.images[index].tag ?? ""),
                       onTap: () async {
                         var img = controller.images[index];
-                        var ok = true;
+                        var ok = false;
                         await showDialog(
                           context: context,
                           builder: (context) {
