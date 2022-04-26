@@ -35,7 +35,7 @@ class RemoteImageListPage extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text('Searched for: $data'),
+                      title: Text('Searching for: $data'),
                     );
                   },
                 );
@@ -126,11 +126,20 @@ class RemoteImageListPage extends StatelessWidget {
                             );
                           },
                         );
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Pulling ${img.name ?? 'null'}"),
+                              content: Text("Keep calm and wait..."),
+                            );
+                          },
+                        );
                         var pair = await controller.pullImage(
                             img.name ?? "null", selectedTag);
                         if (pair.item1 != "") {
                           showDialog(
-                            context: context,
+                            context: Get.overlayContext!,
                             builder: (context) {
                               return AlertDialog(
                                 title: Text("Pulled"),
@@ -140,7 +149,7 @@ class RemoteImageListPage extends StatelessWidget {
                           );
                         } else {
                           showDialog(
-                            context: context,
+                            context: Get.overlayContext!,
                             builder: (context) {
                               return AlertDialog(
                                 title: Text("Error Occurred"),

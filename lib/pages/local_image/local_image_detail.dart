@@ -76,7 +76,7 @@ class LocalImageDetailPage extends StatelessWidget {
                                     var result = await controller.rmImage(e);
                                     if (result.item1 != "") {
                                       await showDialog(
-                                        context: context,
+                                        context: Get.overlayContext!,
                                         builder: (context) {
                                           return AlertDialog(
                                             title: Text("removed"),
@@ -87,7 +87,7 @@ class LocalImageDetailPage extends StatelessWidget {
                                       controller.loadImages();
                                     } else {
                                       await showDialog(
-                                        context: context,
+                                        context: Get.overlayContext!,
                                         builder: (context) {
                                           return AlertDialog(
                                             title: Text("Error"),
