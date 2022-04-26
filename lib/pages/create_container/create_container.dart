@@ -7,6 +7,7 @@ import 'package:fodman/controller/annotation_controller.dart';
 import 'package:fodman/controller/host_ip_mapping_controller.dart';
 import 'package:fodman/controller/local_image_controller.dart';
 import 'package:fodman/controller/memory_unit_controller.dart';
+import 'package:fodman/controller/mount_list_controller.dart';
 import 'package:get/get.dart';
 
 const createContainerPage = '/create_container';
@@ -30,6 +31,8 @@ class CreateContainerPage extends StatelessWidget {
     var cpus = 0;
     var memory = 0;
     var memoryUnitController = Get.put(MemoryUnitController());
+
+    var mountListController = Get.put(MountListController());
 
     imageNameController.text = localImageController.selectedTag ?? "";
     return Scaffold(
@@ -284,11 +287,115 @@ class CreateContainerPage extends StatelessWidget {
             SliverToBoxAdapter(
               child: SizedBox(height: 12.0),
             ),
+            GetBuilder<MountListController>(
+              builder: (controller) => SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextField(
+                          onChanged: (value) => controller.setVolumeAt(
+                              index, value, controller.volumes[index].item2),
+                          decoration: InputDecoration(
+                            labelText: 'Host',
+                          ),
+                        ),
+                      ),
+                      Text(":"),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextField(
+                          onChanged: (value) => controller.setVolumeAt(
+                              index, controller.volumes[index].item1, value),
+                          decoration: InputDecoration(
+                            labelText: 'Container',
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        color: Colors.red,
+                        icon: Icon(Icons.delete),
+                        onPressed: () => controller.removeVolumeAt(index),
+                      ),
+                    ],
+                  ),
+                  childCount: controller.volumes.length,
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.all(8.0),
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  child: IconButton(
+                    onPressed: () => mountListController.appendVolume(),
+                    color: Colors.white,
+                    icon: Icon(Icons.add),
+                  ),
+                ),
+              ),
+            ),
             SliverPersistentHeader(
               delegate: SliverHeader("Add Binds"),
             ),
             SliverToBoxAdapter(
               child: SizedBox(height: 12.0),
+            ),
+            GetBuilder<MountListController>(
+              builder: (controller) => SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextField(
+                          onChanged: (value) => controller.setBindAt(
+                              index, value, controller.binds[index].item2),
+                          decoration: InputDecoration(
+                            labelText: 'Host',
+                          ),
+                        ),
+                      ),
+                      Text(":"),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextField(
+                          onChanged: (value) => controller.setBindAt(
+                              index, controller.binds[index].item1, value),
+                          decoration: InputDecoration(
+                            labelText: 'Container',
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        color: Colors.red,
+                        icon: Icon(Icons.delete),
+                        onPressed: () => controller.removeBindAt(index),
+                      ),
+                    ],
+                  ),
+                  childCount: controller.binds.length,
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.all(8.0),
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  child: IconButton(
+                    onPressed: () => mountListController.appendBind(),
+                    color: Colors.white,
+                    icon: Icon(Icons.add),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
