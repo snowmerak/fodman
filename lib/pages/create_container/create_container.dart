@@ -6,6 +6,7 @@ import 'package:fodman/component/sliver_header.dart';
 import 'package:fodman/controller/annotation_controller.dart';
 import 'package:fodman/controller/host_ip_mapping_controller.dart';
 import 'package:fodman/controller/local_image_controller.dart';
+import 'package:fodman/controller/memory_unit_controller.dart';
 import 'package:get/get.dart';
 
 const createContainerPage = '/create_container';
@@ -27,6 +28,8 @@ class CreateContainerPage extends StatelessWidget {
     var containerName = "";
 
     var cpus = 0;
+    var memory = 0;
+    var memoryUnitController = Get.put(MemoryUnitController());
 
     imageNameController.text = localImageController.selectedTag ?? "";
     return Scaffold(
@@ -231,6 +234,61 @@ class CreateContainerPage extends StatelessWidget {
                   cpus = int.parse(number).abs();
                 },
               ),
+            ),
+            SliverToBoxAdapter(
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Memory',
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      ],
+                      onChanged: (number) {
+                        if (number.isEmpty) {
+                          memory = 0;
+                          return;
+                        }
+                        memory = int.parse(number).abs();
+                      },
+                    ),
+                  ),
+                  GetBuilder<MemoryUnitController>(
+                    builder: (controller) => DropdownButton<String>(
+                      value: controller.memoryUnit,
+                      items: <String>["b", "k", "m", "g"]
+                          .map(
+                            (e) => DropdownMenuItem(
+                              child: Text(e),
+                              value: e,
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (data) =>
+                          controller.setMemoryUnit(data ?? "m"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("Add Volumes"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("Add Binds"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
             ),
           ],
         ),
