@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fodman/component/sliver_header.dart';
 import 'package:fodman/controller/annotation_controller.dart';
 import 'package:fodman/controller/host_ip_mapping_controller.dart';
@@ -24,7 +25,8 @@ class CreateContainerPage extends StatelessWidget {
     var annotationController = Get.put(AnnotationController());
 
     var containerName = "";
-    var containerIPMapping = "";
+
+    var cpus = 0;
 
     imageNameController.text = localImageController.selectedTag ?? "";
     return Scaffold(
@@ -47,7 +49,7 @@ class CreateContainerPage extends StatelessWidget {
             ),
             SliverPersistentHeader(
               delegate: SliverHeader('Select or Input Image Name'),
-              pinned: true,
+              floating: true,
             ),
             SliverToBoxAdapter(
               child: GetBuilder<LocalImageController>(
@@ -86,7 +88,6 @@ class CreateContainerPage extends StatelessWidget {
             ),
             SliverPersistentHeader(
               delegate: SliverHeader("Host to IP Mapping Table"),
-              pinned: true,
               floating: true,
             ),
             GetBuilder<HostIPMappingController>(
@@ -146,7 +147,6 @@ class CreateContainerPage extends StatelessWidget {
             ),
             SliverPersistentHeader(
               delegate: SliverHeader("Annotation"),
-              pinned: true,
               floating: true,
             ),
             SliverToBoxAdapter(
@@ -202,6 +202,34 @@ class CreateContainerPage extends StatelessWidget {
                     icon: Icon(Icons.add),
                   ),
                 ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("Input Hardware Specification"),
+              floating: true,
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverToBoxAdapter(
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'CPUs',
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                ],
+                onChanged: (number) {
+                  if (number.isEmpty) {
+                    cpus = 0;
+                    return;
+                  }
+                  cpus = int.parse(number).abs();
+                },
               ),
             ),
           ],
