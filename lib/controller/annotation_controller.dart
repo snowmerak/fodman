@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
 
 class AnnotationController extends GetxController {
-  List<Tuple2<String, String>> list = [Tuple2("", "")];
+  List<Tuple2<String, String>> list = [];
 
   void append() {
     list.add(Tuple2("", ""));
