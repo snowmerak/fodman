@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/local_image/local_image_detail.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
@@ -22,7 +23,7 @@ class Main extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "D2Coding",
         textTheme: Theme.of(context).textTheme.apply(
-              fontSizeFactor: 1.5,
+              fontSizeFactor: 1.2,
               bodyColor: Colors.white,
               displayColor: Colors.white,
             ),
@@ -35,6 +36,7 @@ class Main extends StatelessWidget {
         GetPage(name: localImageListPage, page: () => LocalImageListPage()),
         GetPage(name: localImageDetailPage, page: () => LocalImageDetailPage()),
         GetPage(name: remoteImageListPage, page: () => RemoteImageListPage()),
+        GetPage(name: createContainerPage, page: () => CreateContainerPage()),
       ],
     );
   }
