@@ -17,12 +17,12 @@ class MountListController extends GetxController {
     update();
   }
 
-  void setVolume(int index, String host, String container) {
+  void setVolumeAt(int index, String host, String container) {
     volumes[index] = Tuple2(host, container);
     update();
   }
 
-  void setBind(int index, String host, String container) {
+  void setBindAt(int index, String host, String container) {
     binds[index] = Tuple2(host, container);
     update();
   }
