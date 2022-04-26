@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:get/get.dart';
@@ -38,6 +39,17 @@ class IndexPage extends StatelessWidget {
                 Text(
                   "Container",
                   style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 32.0,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        colors[Random().nextInt(colors.length)]),
+                  ),
+                  child: const Text('Create Container'),
+                  onPressed: () => Get.toNamed(createContainerPage),
                 ),
               ],
             ),
