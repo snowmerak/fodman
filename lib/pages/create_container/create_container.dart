@@ -15,13 +15,18 @@ class CreateContainerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var localImageController = Get.put(LocalImageController());
+    if (localImageController.images.isEmpty) {
+      localImageController.loadImages();
+    }
 
+    var imageNameController = TextEditingController();
     var hostIPMappingController = Get.put(HostIPMappingController());
     var annotationController = Get.put(AnnotationController());
 
     var containerName = "";
     var containerIPMapping = "";
 
+    imageNameController.text = localImageController.selectedTag ?? "";
     return Scaffold(
       body: Container(
         margin: EdgeInsets.all(12.0),
@@ -36,6 +41,45 @@ class CreateContainerPage extends StatelessWidget {
               ),
               floating: true,
               pinned: true,
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader('Select or Input Image Name'),
+              pinned: true,
+            ),
+            SliverToBoxAdapter(
+              child: GetBuilder<LocalImageController>(
+                builder: (controller) {
+                  var localImages = <String>[];
+                  for (var value in controller.images.values) {
+                    localImages.addAll(value.names ?? <String>[]);
+                  }
+                  localImages.sort(((a, b) => a.compareTo(b)));
+
+                  return DropdownButton<String>(
+                    hint: Text('Select Image'),
+                    items: localImages
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(e),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (data) => imageNameController.text = data ?? "",
+                  );
+                },
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: TextField(
+                controller: imageNameController,
+                decoration: InputDecoration(
+                  labelText: 'Image Name',
+                ),
+              ),
             ),
             SliverToBoxAdapter(
               child: SizedBox(height: 12.0),
@@ -73,6 +117,7 @@ class CreateContainerPage extends StatelessWidget {
                         ),
                       ),
                       IconButton(
+                        color: Colors.red,
                         icon: Icon(Icons.delete),
                         onPressed: () => controller.removeAt(index),
                       ),
@@ -136,6 +181,7 @@ class CreateContainerPage extends StatelessWidget {
                       ),
                       IconButton(
                         icon: Icon(Icons.delete),
+                        color: Colors.red,
                         onPressed: () => controller.removeAt(index),
                       ),
                     ],

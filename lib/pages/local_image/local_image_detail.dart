@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fodman/controller/local_image_controller.dart';
+import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:get/get.dart';
 
 const localImageDetailPage = '/local_image_detail';
@@ -48,11 +49,29 @@ class LocalImageDetailPage extends StatelessWidget {
                                 SizedBox(
                                   width: 16.0,
                                 ),
-                                ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.red),
+                                TextButton(
+                                  // style: ButtonStyle(
+                                  //   backgroundColor: MaterialStateProperty.all(
+                                  //     Colors.lightBlue,
+                                  //   ),
+                                  // ),
+                                  onPressed: () {
+                                    controller.selectedTag = e;
+                                    Get.toNamed(createContainerPage);
+                                  },
+                                  child: Text(
+                                    "RUN",
+                                    style: TextStyle(
+                                      color: Colors.lightBlue,
+                                    ),
                                   ),
+                                ),
+                                TextButton(
+                                  // style: ButtonStyle(
+                                  //   backgroundColor: MaterialStateProperty.all(
+                                  //     Colors.red,
+                                  //   ),
+                                  // ),
                                   onPressed: () async {
                                     var result = await controller.rmImage(e);
                                     if (result.item1 != "") {
@@ -60,7 +79,7 @@ class LocalImageDetailPage extends StatelessWidget {
                                         context: context,
                                         builder: (context) {
                                           return AlertDialog(
-                                            title: Text("Removed"),
+                                            title: Text("removed"),
                                             content: Text(result.item1),
                                           );
                                         },
@@ -78,7 +97,12 @@ class LocalImageDetailPage extends StatelessWidget {
                                       );
                                     }
                                   },
-                                  child: Text("remove"),
+                                  child: Text(
+                                    "REMOVE",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                    ),
+                                  ),
                                 ),
                               ],
                             );

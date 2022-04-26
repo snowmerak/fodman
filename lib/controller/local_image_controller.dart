@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
 import 'package:fodman/podman/local_image.dart';
 import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
@@ -9,6 +8,7 @@ class LocalImageController extends GetxController {
   Map<String, LocalImage> images = {};
   List<String> imagesKeys = [];
   LocalImage? selectedImage;
+  String? selectedTag;
   String? errorTitle;
   String? errorMessage;
 
