@@ -727,10 +727,10 @@ class CreateContainerPage extends StatelessWidget {
             ),
             SliverToBoxAdapter(
               child: ElevatedButton(
-                child: Text("RUN"),
+                child: Text("RUN BACKGROUD"),
                 onPressed: () async {
                   var result = await resultController
-                      .runContainer(resultController.result);
+                      .runContainer(resultController.result + " -d");
                   if (result.item1.isNotEmpty) {
                     showDialog(
                       context: Get.overlayContext!,
