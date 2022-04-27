@@ -12,6 +12,7 @@ import 'package:fodman/controller/host_ip_mapping_controller.dart';
 import 'package:fodman/controller/local_image_controller.dart';
 import 'package:fodman/controller/memory_unit_controller.dart';
 import 'package:fodman/controller/mount_list_controller.dart';
+import 'package:fodman/controller/port_list_controller.dart';
 import 'package:get/get.dart';
 
 const createContainerPage = '/create_container';
@@ -26,15 +27,17 @@ class CreateContainerPage extends StatelessWidget {
       localImageController.loadImages();
     }
 
+    var containerName = "";
+
     var imageNameController = TextEditingController();
     var hostIPMappingController = Get.put(HostIPMappingController());
     var annotationController = Get.put(AnnotationController());
 
-    var containerName = "";
-
     var cpus = 0;
     var memory = 0;
     var memoryUnitController = Get.put(MemoryUnitController());
+
+    var portListController = Get.put(PortListController());
 
     var mountListController = Get.put(MountListController());
 
@@ -105,7 +108,83 @@ class CreateContainerPage extends StatelessWidget {
               child: SizedBox(height: 12.0),
             ),
             SliverPersistentHeader(
-              delegate: SliverHeader("Host to IP Mapping Table"),
+              delegate: SliverHeader('Publish Ports'),
+              floating: true,
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            GetBuilder<PortListController>(
+              builder: (controller) {
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: TextField(
+                              controller: TextEditingController(
+                                text: controller.ports[index].item1,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Port',
+                              ),
+                              onChanged: (value) =>
+                                  controller.setPortAt(index, value, ""),
+                            ),
+                          ),
+                          Text(":"),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: TextField(
+                              controller: TextEditingController(
+                                text: controller.ports[index].item2,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Host Port',
+                              ),
+                              onChanged: (value) =>
+                                  controller.setPortAt(index, "", value),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            color: Colors.red,
+                            onPressed: () => controller.removeAt(index),
+                          ),
+                        ],
+                      );
+                    },
+                    childCount: controller.ports.length,
+                  ),
+                );
+              },
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.all(8.0),
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  child: IconButton(
+                    onPressed: () => portListController.append(),
+                    color: Colors.white,
+                    icon: Icon(Icons.add),
+                  ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("Host IP Mapping Table"),
               floating: true,
             ),
             GetBuilder<HostIPMappingController>(
@@ -137,7 +216,7 @@ class CreateContainerPage extends StatelessWidget {
                       ),
                       IconButton(
                         color: Colors.red,
-                        icon: Icon(Icons.delete),
+                        icon: Icon(Icons.remove),
                         onPressed: () => controller.removeAt(index),
                       ),
                     ],
@@ -198,7 +277,7 @@ class CreateContainerPage extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete),
+                        icon: Icon(Icons.remove),
                         color: Colors.red,
                         onPressed: () => controller.removeAt(index),
                       ),
@@ -328,7 +407,7 @@ class CreateContainerPage extends StatelessWidget {
                       ),
                       IconButton(
                         color: Colors.red,
-                        icon: Icon(Icons.delete),
+                        icon: Icon(Icons.remove),
                         onPressed: () => controller.removeVolumeAt(index),
                       ),
                     ],
@@ -386,7 +465,7 @@ class CreateContainerPage extends StatelessWidget {
                       ),
                       IconButton(
                         color: Colors.red,
-                        icon: Icon(Icons.delete),
+                        icon: Icon(Icons.remove),
                         onPressed: () => controller.removeBindAt(index),
                       ),
                     ],
@@ -447,7 +526,7 @@ class CreateContainerPage extends StatelessWidget {
                       ),
                       IconButton(
                         color: Colors.red,
-                        icon: Icon(Icons.delete),
+                        icon: Icon(Icons.remove),
                         onPressed: () => controller.removeAt(index),
                       ),
                     ],
@@ -535,7 +614,81 @@ class CreateContainerPage extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: Colors.blue,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    var buffer = <String>["run"];
+                    if (imageNameController.text.isNotEmpty) {
+                      buffer.add(imageNameController.text);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Error"),
+                          content: Text("Image name is empty"),
+                          actions: [
+                            TextButton(
+                              child: Text("OK"),
+                              onPressed: () => Get.back(),
+                            ),
+                          ],
+                        ),
+                      );
+                      return;
+                    }
+                    if (containerName.isNotEmpty) {
+                      buffer.add("--name");
+                      buffer.add(containerName);
+                    }
+                    for (var value in hostIPMappingController.list) {
+                      buffer.add("--add-host=${value.item1}:${value.item2}");
+                    }
+                    for (var value in annotationController.list) {
+                      buffer.add("--annotation=${value.item1}=${value.item2}");
+                    }
+                    if (cpus > 0) {
+                      buffer.add("--cpus=$cpus");
+                    }
+                    if (memory > 0) {
+                      var unit = memoryUnitController.memoryUnit;
+                      buffer.add("--memory=$memory$unit");
+                    }
+                    for (var value in portListController.ports) {
+                      buffer.add("-p ${value.item1}:${value.item2}");
+                    }
+                    for (var value in mountListController.binds) {
+                      buffer.add(
+                          "--mount=type=bind,src=${value.item1},dst=${value.item2}");
+                    }
+                    for (var value in mountListController.volumes) {
+                      buffer.add(
+                          "--mount=type=volume,src=${value.item1},dst=${value.item2}");
+                    }
+                    buffer.add("--restart=${restartController.selectedOption}");
+                    if (optionController.options[optionController.autoRemove] ??
+                        false) {
+                      buffer.add(optionController.autoRemove);
+                    }
+                    if (optionController.options[optionController.replace] ??
+                        false) {
+                      buffer.add(optionController.replace);
+                    }
+                    if (optionController.options[optionController.readonly] ??
+                        false) {
+                      buffer.add(optionController.readonly);
+                    }
+                    if (optionController.options[optionController.tty] ??
+                        false) {
+                      buffer.add(optionController.tty);
+                    }
+                    if (optionController
+                            .options[optionController.interactive] ??
+                        false) {
+                      buffer.add(optionController.interactive);
+                    }
+                    for (var value in environmentController.envs) {
+                      buffer.add("--env ${value.item1}=${value.item2}");
+                    }
+                    resultController.setResult(buffer.join(" "));
+                  },
                   icon: Icon(Icons.create),
                   color: Colors.white,
                 ),
@@ -544,8 +697,18 @@ class CreateContainerPage extends StatelessWidget {
             GetBuilder<ContainerCreateController>(
               builder: (controller) => SliverToBoxAdapter(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(controller.result),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          controller.result,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ),
                     TextButton(
                       onPressed: () => Clipboard.setData(
                           ClipboardData(text: controller.result)),
