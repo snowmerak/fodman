@@ -705,14 +705,17 @@ class CreateContainerPage extends StatelessWidget {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
-                          controller.result,
+                          "podman " + controller.result,
                           maxLines: 1,
                         ),
                       ),
                     ),
                     TextButton(
                       onPressed: () => Clipboard.setData(
-                          ClipboardData(text: controller.result)),
+                        ClipboardData(
+                          text: "podman " + controller.result,
+                        ),
+                      ),
                       child: Text("COPY"),
                     ),
                   ],
