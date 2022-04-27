@@ -133,8 +133,8 @@ class CreateContainerPage extends StatelessWidget {
                               decoration: InputDecoration(
                                 labelText: 'Port',
                               ),
-                              onChanged: (value) =>
-                                  controller.setPortAt(index, value, ""),
+                              onChanged: (value) => controller.setPortAt(
+                                  index, value, controller.ports[index].item2),
                             ),
                           ),
                           Text(":"),
@@ -147,8 +147,8 @@ class CreateContainerPage extends StatelessWidget {
                               decoration: InputDecoration(
                                 labelText: 'Host Port',
                               ),
-                              onChanged: (value) =>
-                                  controller.setPortAt(index, "", value),
+                              onChanged: (value) => controller.setPortAt(
+                                  index, controller.ports[index].item1, value),
                             ),
                           ),
                           IconButton(
@@ -590,10 +590,11 @@ class CreateContainerPage extends StatelessWidget {
                     children: [
                       Text("${controller.keys[index]}: "),
                       Switch(
-                        value:
-                            controller.options[controller.keys[index]] ?? false,
-                        onChanged: (value) =>
-                            controller.setOption(controller.keys[index], value),
+                        value: controller.options[
+                                controller.toKey(controller.keys[index])] ??
+                            false,
+                        onChanged: (value) => controller.setOption(
+                            controller.toKey(controller.keys[index]), value),
                       ),
                     ],
                   ),
@@ -724,7 +725,31 @@ class CreateContainerPage extends StatelessWidget {
             SliverToBoxAdapter(
               child: ElevatedButton(
                 child: Text("RUN"),
-                onPressed: () {},
+                onPressed: () async {
+                  var result = await resultController
+                      .runContainer(resultController.result);
+                  if (result.item1.isNotEmpty) {
+                    showDialog(
+                      context: Get.overlayContext!,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Started"),
+                          content: Text(result.item1),
+                        );
+                      },
+                    );
+                  } else {
+                    showDialog(
+                      context: Get.overlayContext!,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content: Text(result.item2),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],
