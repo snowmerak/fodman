@@ -101,6 +101,6 @@ Future<List<LocalImage>> getImages() async {
 }
 
 Future<Tuple2<String, String>> removeImage(String name) async {
-  var result = Process.runSync("podman", ["image", "rm", name]);
+  var result = await Process.run("podman", ["image", "rm", name]);
   return Tuple2(result.stdout.toString(), result.stderr.toString());
 }
