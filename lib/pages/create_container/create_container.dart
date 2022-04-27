@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fodman/component/sliver_header.dart';
 import 'package:fodman/controller/annotation_controller.dart';
+import 'package:fodman/controller/container_create_controller.dart';
+import 'package:fodman/controller/container_environment_controller.dart';
+import 'package:fodman/controller/container_restart_controller.dart';
+import 'package:fodman/controller/create_bool_controller.dart';
 import 'package:fodman/controller/host_ip_mapping_controller.dart';
 import 'package:fodman/controller/local_image_controller.dart';
 import 'package:fodman/controller/memory_unit_controller.dart';
@@ -33,6 +37,14 @@ class CreateContainerPage extends StatelessWidget {
     var memoryUnitController = Get.put(MemoryUnitController());
 
     var mountListController = Get.put(MountListController());
+
+    var restartController = Get.put(ContainerRestartController());
+
+    var optionController = Get.put(CreateOptionController());
+
+    var resultController = Get.put(ContainerCreateController());
+
+    var environmentController = Get.put(ContainerEnvironmentController());
 
     imageNameController.text = localImageController.selectedTag ?? "";
     return Scaffold(
@@ -395,6 +407,161 @@ class CreateContainerPage extends StatelessWidget {
                     icon: Icon(Icons.add),
                   ),
                 ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("Add Env"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            GetBuilder<ContainerEnvironmentController>(
+              builder: (controller) => SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextField(
+                          onChanged: (value) => controller.setEnvAt(
+                              index, value, controller.envs[index].item2),
+                          decoration: InputDecoration(
+                            labelText: 'Key',
+                          ),
+                        ),
+                      ),
+                      Text("="),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextField(
+                          onChanged: (value) => controller.setEnvAt(
+                              index, controller.envs[index].item1, value),
+                          decoration: InputDecoration(
+                            labelText: 'Value',
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        color: Colors.red,
+                        icon: Icon(Icons.delete),
+                        onPressed: () => controller.removeAt(index),
+                      ),
+                    ],
+                  ),
+                  childCount: controller.envs.length,
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.all(8.0),
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  child: IconButton(
+                    onPressed: () => environmentController.append(),
+                    color: Colors.white,
+                    icon: Icon(Icons.add),
+                  ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("ETC"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            GetBuilder<ContainerRestartController>(
+              builder: (controller) => SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    Text("Restart Policy: "),
+                    DropdownButton<String>(
+                      hint: Text("Restart Policy"),
+                      value: controller.selectedOption,
+                      items: controller.options
+                          .map(
+                            (e) => DropdownMenuItem(
+                              child: Text(e),
+                              value: e,
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (data) =>
+                          controller.setSelectedOption(data ?? "no"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GetBuilder<CreateOptionController>(
+              builder: (controller) => SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => Row(
+                    children: [
+                      Text("${controller.keys[index]}: "),
+                      Switch(
+                        value:
+                            controller.options[controller.keys[index]] ?? false,
+                        onChanged: (value) =>
+                            controller.setOption(controller.keys[index], value),
+                      ),
+                    ],
+                  ),
+                  childCount: controller.keys.length,
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("Create"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverToBoxAdapter(
+              child: CircleAvatar(
+                backgroundColor: Colors.blue,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.create),
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            GetBuilder<ContainerCreateController>(
+              builder: (controller) => SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    Text(controller.result),
+                    TextButton(
+                      onPressed: () => Clipboard.setData(
+                          ClipboardData(text: controller.result)),
+                      child: Text("COPY"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverToBoxAdapter(
+              child: ElevatedButton(
+                child: Text("RUN"),
+                onPressed: () {},
               ),
             ),
           ],
