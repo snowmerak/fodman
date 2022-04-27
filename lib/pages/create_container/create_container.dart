@@ -729,8 +729,11 @@ class CreateContainerPage extends StatelessWidget {
               child: ElevatedButton(
                 child: Text("RUN BACKGROUD"),
                 onPressed: () async {
-                  var result = await resultController
-                      .runContainer(resultController.result + " -d");
+                  var result = await resultController.runContainer(
+                      resultController.result
+                              .replaceAll("-i", "")
+                              .replaceAll("-t", "") +
+                          " -d");
                   if (result.item1.isNotEmpty) {
                     showDialog(
                       context: Get.overlayContext!,
