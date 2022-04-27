@@ -9,6 +9,12 @@ class CreateOptionController extends GetxController {
     "-i": false,
   };
 
+  String autoRemove = "--rm";
+  String readonly = "--read-only";
+  String replace = "--replace";
+  String tty = "-t";
+  String interactive = "-i";
+
   List<String> keys = [
     "Auto Remove",
     "Readonly",
