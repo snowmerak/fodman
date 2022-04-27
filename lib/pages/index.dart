@@ -3,10 +3,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:fodman/component/sliver_header.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:get/get.dart';
+import 'package:tuple/tuple.dart';
 
 class IndexPage extends StatelessWidget {
   const IndexPage({Key? key}) : super(key: key);
@@ -25,68 +27,125 @@ class IndexPage extends StatelessWidget {
       Color.fromRGBO(21, 32, 63, 1.0),
     ];
 
+    const machines = <Tuple2<String, String>>[];
+    const containers = <Tuple2<String, String>>[
+      Tuple2("Create Container", createContainerPage),
+    ];
+    const images = <Tuple2<String, String>>[
+      Tuple2("Local Images", localImageListPage),
+      Tuple2("Search Images", remoteImageListPage),
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fodman'),
-      ),
       body: Container(
         margin: EdgeInsets.all(12.0),
-        child: Row(
-          children: [
-            Spacer(),
-            Column(
-              children: [
-                Text(
-                  "Container",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 32.0,
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        colors[Random().nextInt(colors.length)]),
-                  ),
-                  child: const Text('Create Container'),
-                  onPressed: () => Get.toNamed(createContainerPage),
-                ),
-              ],
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text("Fodman"),
             ),
-            SizedBox(
-              width: 48.0,
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
             ),
-            Column(
-              children: [
-                Text(
-                  "Image",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 32.0,
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        colors[Random().nextInt(colors.length)]),
-                  ),
-                  child: const Text('Local Images'),
-                  onPressed: () => Get.toNamed(localImageListPage),
-                ),
-                SizedBox(
-                  height: 32.0,
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        colors[Random().nextInt(colors.length)]),
-                  ),
-                  child: const Text('Search Image'),
-                  onPressed: () => Get.toNamed(remoteImageListPage),
-                ),
-              ],
+            SliverPersistentHeader(
+              delegate: SliverHeader("machines"),
             ),
-            Spacer(),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                machines
+                    .map(
+                      (e) => Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  colors[Random().nextInt(colors.length)])),
+                          onPressed: () => Get.toNamed(e.item2),
+                          child: Text(e.item1),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("containers"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                containers
+                    .map(
+                      (e) => Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  colors[Random().nextInt(colors.length)])),
+                          onPressed: () => Get.toNamed(e.item2),
+                          child: Text(e.item1),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("images"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                images
+                    .map(
+                      (e) => Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  colors[Random().nextInt(colors.length)])),
+                          onPressed: () => Get.toNamed(e.item2),
+                          child: Text(e.item1),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
           ],
         ),
       ),
