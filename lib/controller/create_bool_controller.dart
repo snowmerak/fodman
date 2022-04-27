@@ -27,4 +27,21 @@ class CreateOptionController extends GetxController {
     options[key] = value;
     update();
   }
+
+  String toKey(String key) {
+    switch (key) {
+      case "Auto Remove":
+        return autoRemove;
+      case "Readonly":
+        return readonly;
+      case "Replace":
+        return replace;
+      case "TTY":
+        return tty;
+      case "Interactive":
+        return interactive;
+      default:
+        return "";
+    }
+  }
 }
