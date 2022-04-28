@@ -636,8 +636,7 @@ class CreateContainerPage extends StatelessWidget {
                       return;
                     }
                     if (containerName.isNotEmpty) {
-                      buffer.add("--name");
-                      buffer.add(containerName);
+                      buffer.add("--name=$containerName");
                     }
                     for (var value in hostIPMappingController.list) {
                       buffer.add("--add-host=${value.item1}:${value.item2}");
