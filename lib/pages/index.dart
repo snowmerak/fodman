@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fodman/component/sliver_header.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
+import 'package:fodman/pages/initialize_machine/initialize_machine.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
@@ -29,6 +30,7 @@ class IndexPage extends StatelessWidget {
     ];
 
     const machines = <Tuple2<String, String>>[
+      Tuple2("Initialize Machine", initializeMachinePage),
       Tuple2("Local Machines", localMachineListPage),
     ];
     const containers = <Tuple2<String, String>>[
