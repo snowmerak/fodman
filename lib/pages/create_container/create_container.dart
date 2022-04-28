@@ -616,25 +616,7 @@ class CreateContainerPage extends StatelessWidget {
                 backgroundColor: Colors.blue,
                 child: IconButton(
                   onPressed: () {
-                    var buffer = <String>["run"];
-                    if (imageNameController.text.isNotEmpty) {
-                      buffer.add(imageNameController.text);
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text("Error"),
-                          content: Text("Image name is empty"),
-                          actions: [
-                            TextButton(
-                              child: Text("OK"),
-                              onPressed: () => Get.back(),
-                            ),
-                          ],
-                        ),
-                      );
-                      return;
-                    }
+                    var buffer = <String>["create"];
                     if (containerName.isNotEmpty) {
                       buffer.add("--name=$containerName");
                     }
@@ -687,7 +669,25 @@ class CreateContainerPage extends StatelessWidget {
                     for (var value in environmentController.envs) {
                       buffer.add("--env ${value.item1}=${value.item2}");
                     }
-                    resultController.setResult(buffer.join(" "));
+                    if (imageNameController.text.isNotEmpty) {
+                      buffer.add(imageNameController.text);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Error"),
+                          content: Text("Image name is empty"),
+                          actions: [
+                            TextButton(
+                              child: Text("OK"),
+                              onPressed: () => Get.back(),
+                            ),
+                          ],
+                        ),
+                      );
+                      return;
+                    }
+                    resultController.setResult(buffer);
                   },
                   icon: Icon(Icons.create),
                   color: Colors.white,
@@ -704,7 +704,7 @@ class CreateContainerPage extends StatelessWidget {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
-                          "podman " + controller.result,
+                          "podman " + controller.result.join(" "),
                           maxLines: 1,
                         ),
                       ),
@@ -712,7 +712,7 @@ class CreateContainerPage extends StatelessWidget {
                     TextButton(
                       onPressed: () => Clipboard.setData(
                         ClipboardData(
-                          text: "podman " + controller.result,
+                          text: "podman " + controller.result.join(" "),
                         ),
                       ),
                       child: Text("COPY"),
@@ -728,11 +728,8 @@ class CreateContainerPage extends StatelessWidget {
               child: ElevatedButton(
                 child: Text("RUN BACKGROUD"),
                 onPressed: () async {
-                  var result = await resultController.runContainer(
-                      resultController.result
-                              .replaceAll("-i", "")
-                              .replaceAll("-t", "") +
-                          " -d");
+                  var result = await resultController
+                      .runContainer(resultController.result);
                   if (result.item1.isNotEmpty) {
                     showDialog(
                       context: Get.overlayContext!,
