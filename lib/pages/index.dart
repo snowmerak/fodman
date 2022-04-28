@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fodman/component/sliver_header.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
+import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
@@ -27,13 +28,15 @@ class IndexPage extends StatelessWidget {
       Color.fromRGBO(21, 32, 63, 1.0),
     ];
 
-    const machines = <Tuple2<String, String>>[];
+    const machines = <Tuple2<String, String>>[
+      Tuple2("Local Machines", localMachineListPage),
+    ];
     const containers = <Tuple2<String, String>>[
       Tuple2("Create Container", createContainerPage),
     ];
     const images = <Tuple2<String, String>>[
       Tuple2("Local Images", localImageListPage),
-      Tuple2("Search Images", remoteImageListPage),
+      Tuple2("Search Image", remoteImageListPage),
     ];
 
     return Scaffold(

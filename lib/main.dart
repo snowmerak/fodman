@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/local_image/local_image_detail.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
+import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:get/get.dart';
 
@@ -37,6 +38,7 @@ class Main extends StatelessWidget {
         GetPage(name: localImageDetailPage, page: () => LocalImageDetailPage()),
         GetPage(name: remoteImageListPage, page: () => RemoteImageListPage()),
         GetPage(name: createContainerPage, page: () => CreateContainerPage()),
+        GetPage(name: localMachineListPage, page: () => LocalMachineListPage()),
       ],
     );
   }
