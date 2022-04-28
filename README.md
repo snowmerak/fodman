@@ -38,7 +38,8 @@ unzip the zip file and run the executable file named fodman.
 2. add `$HOME/fodman.app/Contents/MacOS` to path variable.
 3. run `fodman` on your terminal app.
 
-I'm so sorry for the sandbox of macos app. I cannot disable sandbox for this app.
+I'm so sorry for the sandbox of macos app. I cannot disable sandbox for this app.  
+I will make a installation script for macos app.
 
 #### linux
 
@@ -55,7 +56,8 @@ I will add a option create desktop entry for linux.
 1. support: 
    1. initialize a machine
    2. machine list
-   3. remove machine
+   3. select machine
+   4. remove machine
 2. will add:
 
 ### containers
@@ -64,6 +66,7 @@ I will add a option create desktop entry for linux.
    1. run container
 2. will add:
    1. container list
+   2. remove container
 
 ### images
 
