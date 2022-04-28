@@ -71,7 +71,7 @@ class Machine {
 
 Future<List<Machine>> getMachines() async {
   var result = await Process.run(
-      "podman", ["machine", "list", "--format", "json"],
+      "podman", ["machine", "list", "--format", "json", "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return (json.decode(result.stdout) as List<dynamic>)
       .map((e) => Machine.fromJson(e))
@@ -79,14 +79,15 @@ Future<List<Machine>> getMachines() async {
 }
 
 Future<String> setConnectionDefault(String machineName) async {
-  var result = await Process.run(
-      "podman", ["system", "connection", "default", machineName],
+  var result = await Process.run("podman",
+      ["system", "connection", "default", machineName, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return result.stderr.toString();
 }
 
 Future<Tuple2<String, String>> startMachine(String machineName) async {
-  var result = await Process.start("podman", ["machine", "start", machineName],
+  var result = await Process.start(
+      "podman", ["machine", "start", machineName, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   var stdoutBuffer = StringBuffer();
   var stderrBuffer = StringBuffer();
@@ -101,13 +102,15 @@ Future<Tuple2<String, String>> startMachine(String machineName) async {
 }
 
 Future<Tuple2<String, String>> stopMachine(String machineName) async {
-  var result = await Process.run("podman", ["machine", "stop", machineName],
+  var result = await Process.run(
+      "podman", ["machine", "stop", machineName, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout.toString(), result.stderr.toString());
 }
 
 Future<Tuple2<String, String>> removeMachine(String machineName) async {
-  var result = await Process.start("podman", ["machine", "rm", machineName],
+  var result = await Process.start(
+      "podman", ["machine", "rm", machineName, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   result.stdin.writeln("y");
   var channel = Channel<int>();
@@ -152,6 +155,7 @@ Future<Tuple2<String, String>> initMachine(String name, int cpus, int memory,
     args.add(volume.item1);
     args.add(volume.item2);
   }
+  args.addAll(["--log-level", "error"]);
   var result = await Process.run("podman", args,
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout.toString(), result.stderr.toString());

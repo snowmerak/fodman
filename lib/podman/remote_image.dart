@@ -46,7 +46,7 @@ class RemoteImage {
 
 Future<List<RemoteImage>> searchImage(String keyword) async {
   var result = await Process.run(
-      "podman", ["search", keyword, "--format", "json"],
+      "podman", ["search", keyword, "--format", "json", "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   var data = (json.decode(result.stdout) as List<dynamic>).map((element) {
     return RemoteImage.fromJson(element);
@@ -56,7 +56,8 @@ Future<List<RemoteImage>> searchImage(String keyword) async {
 }
 
 Future<Tuple2<String, String>> pullImage(String name, String tag) async {
-  var result = await Process.run("podman", ["image", "pull", "$name:$tag"],
+  var result = await Process.run(
+      "podman", ["image", "pull", "$name:$tag", "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout.toString(), result.stderr.toString());
 }

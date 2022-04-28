@@ -107,8 +107,8 @@ class Container {
 }
 
 Future<List<Container>> getContainers() async {
-  var result = await Process.run(
-      "podman", ["container", "list", "-a", "--format", "json"],
+  var result = await Process.run("podman",
+      ["container", "list", "-a", "--format", "json", "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return (json.decode(result.stdout) as List<dynamic>)
       .map((e) => Container.fromJson(e))
@@ -116,19 +116,22 @@ Future<List<Container>> getContainers() async {
 }
 
 Future<Tuple2<String, String>> startContainer(String name) async {
-  var result = await Process.run("podman", ["container", "start", name],
+  var result = await Process.run(
+      "podman", ["container", "start", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
 
 Future<Tuple2<String, String>> stopContainer(String name) async {
-  var result = await Process.run("podman", ["container", "stop", name],
+  var result = await Process.run(
+      "podman", ["container", "stop", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
 
 Future<Tuple2<String, String>> removeContainer(String name) async {
-  var result = await Process.run("podman", ["container", "rm", name],
+  var result = await Process.run(
+      "podman", ["container", "rm", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
