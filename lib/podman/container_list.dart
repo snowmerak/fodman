@@ -53,7 +53,7 @@ class Container {
 
   Container.fromJson(Map<String, dynamic> json) {
     autoRemove = json['AutoRemove'];
-    command = json['Command'].cast<String>();
+    command = json['Command']?.cast<String>() ?? [];
     createdAt = json['CreatedAt'];
     exited = json['Exited'];
     exitedAt = json['ExitedAt'];
@@ -62,10 +62,10 @@ class Container {
     image = json['Image'];
     imageID = json['ImageID'];
     isInfra = json['IsInfra'];
-    labels = json['Labels'].cast<String, String>();
-    mounts = json['Mounts'].cast<String>();
-    names = json['Names'].cast<String>();
-    networks = json['Networks'].cast<String>();
+    labels = json['Labels']?.cast<String, String>() ?? {};
+    mounts = json['Mounts']?.cast<String>() ?? [];
+    names = json['Names']?.cast<String>() ?? [];
+    networks = json['Networks']?.cast<String>() ?? [];
     pid = json['Pid'];
     pod = json['Pod'];
     podName = json['PodName'];
