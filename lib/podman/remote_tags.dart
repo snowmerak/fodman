@@ -22,7 +22,8 @@ class RemoteTag {
 
 Future<List<RemoteTag>> searchTags(String image) async {
   var result = Process.runSync(
-      "podman", ["search", image, "--list-tags", "--format", "json"]);
+      "podman", ["search", image, "--list-tags", "--format", "json"],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   var data = (json.decode(result.stdout) as List<dynamic>).map((element) {
     return RemoteTag.fromJson(element);
   }).toList();

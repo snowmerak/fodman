@@ -92,8 +92,9 @@ class Labels {
 }
 
 Future<List<LocalImage>> getImages() async {
-  var result =
-      await Process.run("podman", ["image", "list", "--format", "json"]);
+  var result = await Process.run(
+      "podman", ["image", "list", "--format", "json"],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   var data = (json.decode(result.stdout) as List<dynamic>).map((element) {
     return LocalImage.fromJson(element);
   }).toList();
@@ -101,6 +102,7 @@ Future<List<LocalImage>> getImages() async {
 }
 
 Future<Tuple2<String, String>> removeImage(String name) async {
-  var result = await Process.run("podman", ["image", "rm", name]);
+  var result = await Process.run("podman", ["image", "rm", name],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout.toString(), result.stderr.toString());
 }

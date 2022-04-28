@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:channel/channel.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
 
 class Machine {
@@ -70,8 +72,9 @@ class Machine {
 }
 
 Future<List<Machine>> getMachines() async {
-  var result =
-      await Process.run("podman", ["machine", "list", "--format", "json"]);
+  var result = await Process.run(
+      "podman", ["machine", "list", "--format", "json"],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   return (json.decode(result.stdout) as List<dynamic>)
       .map((e) => Machine.fromJson(e))
       .toList();
@@ -79,12 +82,14 @@ Future<List<Machine>> getMachines() async {
 
 Future<String> setConnectionDefault(String machineName) async {
   var result = await Process.run(
-      "podman", ["system", "connection", "default", machineName]);
+      "podman", ["system", "connection", "default", machineName],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   return result.stderr.toString();
 }
 
 Future<Tuple2<String, String>> startMachine(String machineName) async {
-  var result = await Process.start("podman", ["machine", "start", machineName]);
+  var result = await Process.start("podman", ["machine", "start", machineName],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   var stdoutBuffer = StringBuffer();
   var stderrBuffer = StringBuffer();
   result.stdout.transform(utf8.decoder).listen((data) {
@@ -98,12 +103,14 @@ Future<Tuple2<String, String>> startMachine(String machineName) async {
 }
 
 Future<Tuple2<String, String>> stopMachine(String machineName) async {
-  var result = await Process.run("podman", ["machine", "stop", machineName]);
+  var result = await Process.run("podman", ["machine", "stop", machineName],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout.toString(), result.stderr.toString());
 }
 
 Future<Tuple2<String, String>> removeMachine(String machineName) async {
-  var result = await Process.start("podman", ["machine", "rm", machineName]);
+  var result = await Process.start("podman", ["machine", "rm", machineName],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   result.stdin.writeln("y");
   var channel = Channel<int>();
   var stdoutBuffer = <int>[];
@@ -147,6 +154,7 @@ Future<Tuple2<String, String>> initMachine(String name, int cpus, int memory,
     args.add(volume.item1);
     args.add(volume.item2);
   }
-  var result = await Process.run("podman", args);
+  var result = await Process.run("podman", args,
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout.toString(), result.stderr.toString());
 }
