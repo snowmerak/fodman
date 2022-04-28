@@ -33,8 +33,10 @@ class LocalMachineListPage extends StatelessWidget {
                     expandedCrossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("cpus: ${controller.machines[index].cPUs}"),
-                      Text("memory: ${controller.machines[index].memory}"),
-                      Text("disk: ${controller.machines[index].diskSize}"),
+                      Text(
+                          "memory: ${int.parse(controller.machines[index].memory ?? '0') / 1e+6} MB"),
+                      Text(
+                          "disk: ${int.parse(controller.machines[index].diskSize ?? '0') / 1e+9} GB"),
                       Text(
                           "is default: ${controller.machines[index].defaults}"),
                       Text("is running: ${controller.machines[index].running}"),
