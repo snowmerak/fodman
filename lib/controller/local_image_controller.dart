@@ -16,7 +16,7 @@ class LocalImageController extends GetxController {
     getImages().then((resp) {
       images = {};
       for (var img in resp) {
-        var withOutTag = img.names!.first.split(":").first;
+        var withOutTag = (img.names ?? [""]).first.split(":").first;
         images[withOutTag] = img;
       }
       imagesKeys = images.keys.toList();
