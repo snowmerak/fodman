@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:channel/channel.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
 
 class Machine {
