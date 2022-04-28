@@ -128,3 +128,25 @@ Future<Tuple2<String, String>> removeMachine(String machineName) async {
   return Tuple2(
       String.fromCharCodes(stdoutBuffer), String.fromCharCodes(stderrBuffer));
 }
+
+Future<Tuple2<String, String>> initMachine(String name, int cpus, int memory,
+    int disks, List<Tuple2<String, String>> volumes) async {
+  var args = [
+    "machine",
+    "init",
+    name,
+    "--cpus",
+    cpus.toString(),
+    "--memory",
+    memory.toString(),
+    "--disk-size",
+    disks.toString(),
+  ];
+  for (var volume in volumes) {
+    args.add("--volume");
+    args.add(volume.item1);
+    args.add(volume.item2);
+  }
+  var result = await Process.run("podman", args);
+  return Tuple2(result.stdout.toString(), result.stderr.toString());
+}
