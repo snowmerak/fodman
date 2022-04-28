@@ -63,7 +63,7 @@ I will add a option create desktop entry for linux.
 ### containers
 
 1. support: 
-   1. run container
+   1. create container
 2. will add:
    1. container list
    2. remove container
