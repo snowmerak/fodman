@@ -30,4 +30,16 @@ class ContainerListController extends GetxController {
     }
     return result;
   }
+
+  Future<Tuple2<String, String>> pauseContainer(String name) async {
+    var result = await podman.pauseContainer(name);
+    loadContainers();
+    return result;
+  }
+
+  Future<Tuple2<String, String>> unpauseContainer(String name) async {
+    var result = await podman.unpauseContainer(name);
+    loadContainers();
+    return result;
+  }
 }

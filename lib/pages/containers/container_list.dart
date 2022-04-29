@@ -252,6 +252,86 @@ class ContainerListPage extends StatelessWidget {
                             child: Text("Stop",
                                 style: TextStyle(color: Colors.orange)),
                           ),
+                          VerticalDivider(),
+                          TextButton(
+                            onPressed: () async {
+                              var result = await controller.unpauseContainer(
+                                  controller.list[index].id ?? "");
+                              if (result.item1.isEmpty) {
+                                showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(result.item2),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Get.back(),
+                                        child: Text("OK"),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Success"),
+                                    content: Text(result.item1),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Get.back(),
+                                        child: Text("OK"),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(
+                              "Unpause",
+                              style: TextStyle(color: Colors.cyan),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              var result = await controller.pauseContainer(
+                                  controller.list[index].id ?? "");
+                              if (result.item1.isEmpty) {
+                                showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(result.item2),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Get.back(),
+                                        child: Text("OK"),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Success"),
+                                    content: Text(result.item1),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Get.back(),
+                                        child: Text("OK"),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(
+                              "Pause",
+                              style: TextStyle(color: Colors.lime),
+                            ),
+                          ),
+                          VerticalDivider(),
                           TextButton(
                             onPressed: () async {
                               showDialog(

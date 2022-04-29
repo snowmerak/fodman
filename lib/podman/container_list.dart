@@ -135,3 +135,17 @@ Future<Tuple2<String, String>> removeContainer(String name) async {
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
+
+Future<Tuple2<String, String>> pauseContainer(String name) async {
+  var result = await Process.run(
+      "podman", ["container", "pause", name, "--log-level", "error"],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return Tuple2(result.stdout, result.stderr);
+}
+
+Future<Tuple2<String, String>> unpauseContainer(String name) async {
+  var result = await Process.run(
+      "podman", ["container", "unpause", name, "--log-level", "error"],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return Tuple2(result.stdout, result.stderr);
+}
