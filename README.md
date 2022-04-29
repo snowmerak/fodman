@@ -64,9 +64,10 @@ I will add a option create desktop entry for linux.
 
 1. support: 
    1. create container
+   2. container list
+   3. container start, stop, remove
 2. will add:
-   1. container list
-   2. remove container
+   1. container pause, unpause
 
 ### images
 
