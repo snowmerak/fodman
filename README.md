@@ -33,6 +33,12 @@ sorry.
 
 ---
 
+#### python script
+
+`curl https://gist.githubusercontent.com/snowmerak/f6264e525054ae20a87cc40227c86e63/raw/install_fodman.py | python3`
+
+---
+
 visit [release page](https://github.com/snowmerak/fodman/releases) and download zip file compatible with your system.
 
 #### windows
