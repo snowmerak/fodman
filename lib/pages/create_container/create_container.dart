@@ -49,6 +49,9 @@ class CreateContainerPage extends StatelessWidget {
 
     var environmentController = Get.put(ContainerEnvironmentController());
 
+    var workdirController = TextEditingController();
+    var commandController = TextEditingController();
+
     imageNameController.text = localImageController.selectedTag ?? "";
     return Scaffold(
       body: Container(
@@ -606,6 +609,31 @@ class CreateContainerPage extends StatelessWidget {
               child: SizedBox(height: 12.0),
             ),
             SliverPersistentHeader(
+              delegate: SliverHeader("Commands"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverToBoxAdapter(
+              child: TextField(
+                controller: workdirController,
+                decoration: InputDecoration(
+                  labelText: "Working Directory",
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: TextField(
+                controller: commandController,
+                decoration: InputDecoration(
+                  labelText: "Commands",
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
               delegate: SliverHeader("Create"),
             ),
             SliverToBoxAdapter(
@@ -669,6 +697,9 @@ class CreateContainerPage extends StatelessWidget {
                     for (var value in environmentController.envs) {
                       buffer.add("--env ${value.item1}=${value.item2}");
                     }
+                    if (workdirController.text.isNotEmpty) {
+                      buffer.add("--workdir=${workdirController.text}");
+                    }
                     if (imageNameController.text.isNotEmpty) {
                       buffer.add(imageNameController.text);
                     } else {
@@ -686,6 +717,9 @@ class CreateContainerPage extends StatelessWidget {
                         ),
                       );
                       return;
+                    }
+                    if (commandController.text.isNotEmpty) {
+                      buffer.add(commandController.text);
                     }
                     resultController.setResult(buffer);
                   },
