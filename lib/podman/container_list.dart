@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:tuple/tuple.dart';
+
 class Container {
   bool? autoRemove;
   List<String>? command;
@@ -9,7 +14,7 @@ class Container {
   String? image;
   String? imageID;
   bool? isInfra;
-  List<String>? labels;
+  Map<String, String>? labels;
   List<String>? mounts;
   List<String>? names;
   List<String>? networks;
@@ -57,10 +62,10 @@ class Container {
     image = json['Image'];
     imageID = json['ImageID'];
     isInfra = json['IsInfra'];
-    labels = json['Labels'];
+    labels = json['Labels'].cast<String, String>();
     mounts = json['Mounts'].cast<String>();
     names = json['Names'].cast<String>();
-    networks = json['Networks'];
+    networks = json['Networks'].cast<String>();
     pid = json['Pid'];
     pod = json['Pod'];
     podName = json['PodName'];
@@ -99,4 +104,31 @@ class Container {
     data['Created'] = created;
     return data;
   }
+}
+
+Future<List<Container>> getContainers() async {
+  var result = await Process.run(
+      "podman", ["container", "list", "-a", "--format", "json"],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return (json.decode(result.stdout) as List<dynamic>)
+      .map((e) => Container.fromJson(e))
+      .toList();
+}
+
+Future<Tuple2<String, String>> startContainer(String name) async {
+  var result = await Process.run("podman", ["container", "start", name],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return Tuple2(result.stdout, result.stderr);
+}
+
+Future<Tuple2<String, String>> stopContainer(String name) async {
+  var result = await Process.run("podman", ["container", "stop", name],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return Tuple2(result.stdout, result.stderr);
+}
+
+Future<Tuple2<String, String>> removeContainer(String name) async {
+  var result = await Process.run("podman", ["container", "rm", name],
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return Tuple2(result.stdout, result.stderr);
 }
