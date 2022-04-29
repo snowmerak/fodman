@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:fodman/pages/containers/container_list.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/initialize_machine/initialize_machine.dart';
 import 'package:fodman/pages/local_image/local_image_detail.dart';
@@ -42,6 +43,7 @@ class Main extends StatelessWidget {
         GetPage(name: localMachineListPage, page: () => LocalMachineListPage()),
         GetPage(
             name: initializeMachinePage, page: () => InitializeMachinePage()),
+        GetPage(name: containerListPage, page: () => ContainerListPage()),
       ],
     );
   }
