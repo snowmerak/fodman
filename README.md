@@ -26,6 +26,13 @@ see the document: [link](https://podman.io/getting-started/installation)
 
 ### install fodman
 
+I recommend to compile fodman from source code.
+Now, fodman is in testing.  
+I cannot compile daily.  
+sorry.
+
+---
+
 visit [release page](https://github.com/snowmerak/fodman/releases) and download zip file compatible with your system.
 
 #### windows
