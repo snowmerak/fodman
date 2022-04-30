@@ -20,17 +20,18 @@ class IndexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var backgroundColor = MaterialStateProperty.all(Colors.grey[700]);
 
-    const machines = <Tuple2<String, String>>[
-      Tuple2("Initialize Machine", initializeMachinePage),
-      Tuple2("Local Machines", localMachineListPage),
+    const machines = <Tuple3<String, String, IconData>>[
+      Tuple3(
+          "Initialize Machine", initializeMachinePage, Icons.create_new_folder),
+      Tuple3("Local Machines", localMachineListPage, Icons.list),
     ];
-    const containers = <Tuple2<String, String>>[
-      Tuple2("Create Container", createContainerPage),
-      Tuple2("Container List", containerListPage),
+    const containers = <Tuple3<String, String, IconData>>[
+      Tuple3("Create Container", createContainerPage, Icons.add),
+      Tuple3("Container List", containerListPage, Icons.list),
     ];
-    const images = <Tuple2<String, String>>[
-      Tuple2("Local Images", localImageListPage),
-      Tuple2("Search Image", remoteImageListPage),
+    const images = <Tuple3<String, String, IconData>>[
+      Tuple3("Local Images", localImageListPage, Icons.list),
+      Tuple3("Search Image", remoteImageListPage, Icons.search),
     ];
 
     return Scaffold(
@@ -68,7 +69,16 @@ class IndexPage extends StatelessWidget {
                             backgroundColor: backgroundColor,
                           ),
                           onPressed: () => Get.toNamed(e.item2),
-                          child: Text(e.item1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(e.item3),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(e.item1),
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -102,7 +112,16 @@ class IndexPage extends StatelessWidget {
                             backgroundColor: backgroundColor,
                           ),
                           onPressed: () => Get.toNamed(e.item2),
-                          child: Text(e.item1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(e.item3),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(e.item1),
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -136,7 +155,16 @@ class IndexPage extends StatelessWidget {
                             backgroundColor: backgroundColor,
                           ),
                           onPressed: () => Get.toNamed(e.item2),
-                          child: Text(e.item1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(e.item3),
+                              SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(e.item1),
+                            ],
+                          ),
                         ),
                       ),
                     )
