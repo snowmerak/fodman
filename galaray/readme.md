@@ -1,6 +1,6 @@
 # Galary
 
-## Main pafe
+## Main page
 
 ![main-page](screenshot1.png)
 

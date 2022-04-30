@@ -92,3 +92,6 @@ I will add a option create desktop entry for linux.
 2. will add:
    1. push image to remote registry
 
+## galary
+
+[link](https://github.com/snowmerak/fodman/blob/main/galaray/readme.md)
