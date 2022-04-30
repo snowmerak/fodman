@@ -281,7 +281,7 @@ class InitializeMachinePage extends StatelessWidget {
                     return;
                   }
                   await showDialog(
-                    context: context,
+                    context: Get.overlayContext!,
                     builder: (context) => AlertDialog(
                       title: Text("Success"),
                       content: Text("Machine is initialized"),
