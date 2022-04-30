@@ -69,15 +69,19 @@ class IndexPage extends StatelessWidget {
                             backgroundColor: backgroundColor,
                           ),
                           onPressed: () => Get.toNamed(e.item2),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(e.item3),
-                              SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(e.item1),
-                            ],
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.32,
+                                0,
+                                MediaQuery.of(context).size.width * 0.32,
+                                0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(e.item3),
+                                Text(e.item1),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -112,15 +116,19 @@ class IndexPage extends StatelessWidget {
                             backgroundColor: backgroundColor,
                           ),
                           onPressed: () => Get.toNamed(e.item2),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(e.item3),
-                              SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(e.item1),
-                            ],
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.32,
+                                0,
+                                MediaQuery.of(context).size.width * 0.32,
+                                0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(e.item3),
+                                Text(e.item1),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -155,15 +163,19 @@ class IndexPage extends StatelessWidget {
                             backgroundColor: backgroundColor,
                           ),
                           onPressed: () => Get.toNamed(e.item2),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(e.item3),
-                              SizedBox(
-                                width: 8.0,
-                              ),
-                              Text(e.item1),
-                            ],
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.32,
+                                0,
+                                MediaQuery.of(context).size.width * 0.32,
+                                0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(e.item3),
+                                Text(e.item1),
+                              ],
+                            ),
                           ),
                         ),
                       ),
