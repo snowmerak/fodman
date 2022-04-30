@@ -18,17 +18,7 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const colors = <Color>[
-      Color.fromRGBO(58, 176, 230, 1.0),
-      Color.fromRGBO(20, 39, 91, 1.0),
-      Color.fromRGBO(89, 195, 225, 1.0),
-      Color.fromRGBO(218, 135, 171, 1.0),
-      Color.fromRGBO(182, 104, 154, 1.0),
-      Color.fromRGBO(79, 184, 137, 1.0),
-      Color.fromRGBO(29, 44, 107, 1.0),
-      Color.fromRGBO(144, 46, 46, 1.0),
-      Color.fromRGBO(21, 32, 63, 1.0),
-    ];
+    var backgroundColor = MaterialStateProperty.all(Colors.grey[700]);
 
     const machines = <Tuple2<String, String>>[
       Tuple2("Initialize Machine", initializeMachinePage),
@@ -75,8 +65,8 @@ class IndexPage extends StatelessWidget {
                         ),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  colors[Random().nextInt(colors.length)])),
+                            backgroundColor: backgroundColor,
+                          ),
                           onPressed: () => Get.toNamed(e.item2),
                           child: Text(e.item1),
                         ),
@@ -109,8 +99,8 @@ class IndexPage extends StatelessWidget {
                         ),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  colors[Random().nextInt(colors.length)])),
+                            backgroundColor: backgroundColor,
+                          ),
                           onPressed: () => Get.toNamed(e.item2),
                           child: Text(e.item1),
                         ),
@@ -143,8 +133,8 @@ class IndexPage extends StatelessWidget {
                         ),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  colors[Random().nextInt(colors.length)])),
+                            backgroundColor: backgroundColor,
+                          ),
                           onPressed: () => Get.toNamed(e.item2),
                           child: Text(e.item1),
                         ),
