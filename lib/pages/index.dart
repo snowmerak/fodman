@@ -21,13 +21,13 @@ class IndexPage extends StatelessWidget {
     var backgroundColor = MaterialStateProperty.all(Colors.grey[700]);
 
     const machines = <Tuple3<String, String, IconData>>[
+      Tuple3("Local Machines", localMachineListPage, Icons.list),
       Tuple3(
           "Initialize Machine", initializeMachinePage, Icons.create_new_folder),
-      Tuple3("Local Machines", localMachineListPage, Icons.list),
     ];
     const containers = <Tuple3<String, String, IconData>>[
-      Tuple3("Create Container", createContainerPage, Icons.add),
       Tuple3("Container List", containerListPage, Icons.list),
+      Tuple3("Create Container", createContainerPage, Icons.add),
     ];
     const images = <Tuple3<String, String, IconData>>[
       Tuple3("Local Images", localImageListPage, Icons.list),
@@ -71,15 +71,19 @@ class IndexPage extends StatelessWidget {
                           onPressed: () => Get.toNamed(e.item2),
                           child: Container(
                             padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width * 0.32,
+                                MediaQuery.of(context).size.width * 0.35,
                                 0,
-                                MediaQuery.of(context).size.width * 0.32,
+                                0,
                                 0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(e.item3),
+                                SizedBox(
+                                  width: 12.0,
+                                ),
                                 Text(e.item1),
+                                Spacer(),
                               ],
                             ),
                           ),
@@ -118,15 +122,19 @@ class IndexPage extends StatelessWidget {
                           onPressed: () => Get.toNamed(e.item2),
                           child: Container(
                             padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width * 0.32,
+                                MediaQuery.of(context).size.width * 0.35,
                                 0,
-                                MediaQuery.of(context).size.width * 0.32,
+                                0,
                                 0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(e.item3),
+                                SizedBox(
+                                  width: 12.0,
+                                ),
                                 Text(e.item1),
+                                Spacer(),
                               ],
                             ),
                           ),
@@ -165,15 +173,19 @@ class IndexPage extends StatelessWidget {
                           onPressed: () => Get.toNamed(e.item2),
                           child: Container(
                             padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width * 0.32,
+                                MediaQuery.of(context).size.width * 0.35,
                                 0,
-                                MediaQuery.of(context).size.width * 0.32,
+                                0,
                                 0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(e.item3),
+                                SizedBox(
+                                  width: 12.0,
+                                ),
                                 Text(e.item1),
+                                Spacer(),
                               ],
                             ),
                           ),
