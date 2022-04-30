@@ -47,12 +47,7 @@ unzip the zip file and run the executable file named fodman.
 
 #### macos
 
-1. unzip the zip file to `$HOME`.
-2. add `$HOME/fodman.app/Contents/MacOS` to path variable.
-3. run `fodman` on your terminal app.
-
-I'm so sorry for the sandbox of macos app. I cannot disable sandbox for this app.  
-I will make a installation script for macos app.
+unzip the zip file to application folder.
 
 #### linux
 
