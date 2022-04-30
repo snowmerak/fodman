@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:fodman/controller/machine_list_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
 const localMachineListPage = "/local_machine_list";
 

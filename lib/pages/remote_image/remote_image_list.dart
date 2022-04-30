@@ -13,7 +13,6 @@ class RemoteImageListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(RemoteImageController());
-    var inputData = "";
     return Scaffold(
       appBar: AppBar(
         title: const Text('Image Search'),
@@ -26,9 +25,6 @@ class RemoteImageListPage extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'Search',
               ),
-              onChanged: (data) {
-                inputData = data;
-              },
               onSubmitted: (data) {
                 controller.loadImages(data);
                 showDialog(
