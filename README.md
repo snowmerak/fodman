@@ -33,9 +33,9 @@ sorry.
 
 ---
 
-#### python script
+~#### python script~
 
-`curl https://gist.githubusercontent.com/snowmerak/f6264e525054ae20a87cc40227c86e63/raw/install_fodman.py | python3`
+~`curl https://gist.githubusercontent.com/snowmerak/f6264e525054ae20a87cc40227c86e63/raw/install_fodman.py | python3`~
 
 ---
 
