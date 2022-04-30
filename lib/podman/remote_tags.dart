@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fodman/podman/config.dart';
+
 class RemoteTag {
   String? name;
   List<String>? tags;
@@ -22,7 +24,7 @@ class RemoteTag {
 
 Future<List<RemoteTag>> searchTags(String image) async {
   var result = Process.runSync(
-      "podman",
+      podmanExec,
       [
         "search",
         image,

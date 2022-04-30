@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:tuple/tuple.dart';
 
+import 'config.dart';
+
 class Container {
   bool? autoRemove;
   List<String>? command;
@@ -107,7 +109,7 @@ class Container {
 }
 
 Future<List<Container>> getContainers() async {
-  var result = await Process.run("podman",
+  var result = await Process.run(podmanExec,
       ["container", "list", "-a", "--format", "json", "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return (json.decode(result.stdout) as List<dynamic>)
@@ -117,35 +119,35 @@ Future<List<Container>> getContainers() async {
 
 Future<Tuple2<String, String>> startContainer(String name) async {
   var result = await Process.run(
-      "podman", ["container", "start", name, "--log-level", "error"],
+      podmanExec, ["container", "start", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
 
 Future<Tuple2<String, String>> stopContainer(String name) async {
   var result = await Process.run(
-      "podman", ["container", "stop", name, "--log-level", "error"],
+      podmanExec, ["container", "stop", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
 
 Future<Tuple2<String, String>> removeContainer(String name) async {
   var result = await Process.run(
-      "podman", ["container", "rm", name, "--log-level", "error"],
+      podmanExec, ["container", "rm", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
 
 Future<Tuple2<String, String>> pauseContainer(String name) async {
   var result = await Process.run(
-      "podman", ["container", "pause", name, "--log-level", "error"],
+      podmanExec, ["container", "pause", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
 
 Future<Tuple2<String, String>> unpauseContainer(String name) async {
   var result = await Process.run(
-      "podman", ["container", "unpause", name, "--log-level", "error"],
+      podmanExec, ["container", "unpause", name, "--log-level", "error"],
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }

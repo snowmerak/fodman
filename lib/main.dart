@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fodman/pages/containers/container_list.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
@@ -8,11 +10,15 @@ import 'package:fodman/pages/local_image/local_image_detail.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
+import 'package:fodman/podman/config.dart';
 import 'package:get/get.dart';
 
 import 'pages/index.dart';
 
 void main() {
+  if (Platform.isMacOS) {
+    podmanExec = "/usr/local/bin/podman";
+  }
   runApp(const Main());
 }
 
