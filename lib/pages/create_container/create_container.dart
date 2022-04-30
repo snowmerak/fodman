@@ -130,11 +130,8 @@ class CreateContainerPage extends StatelessWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.4,
                             child: TextField(
-                              controller: TextEditingController(
-                                text: controller.ports[index].item1,
-                              ),
                               decoration: InputDecoration(
-                                labelText: 'Port',
+                                labelText: 'Host Port',
                               ),
                               onChanged: (value) => controller.setPortAt(
                                   index, value, controller.ports[index].item2),
@@ -144,11 +141,8 @@ class CreateContainerPage extends StatelessWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.4,
                             child: TextField(
-                              controller: TextEditingController(
-                                text: controller.ports[index].item2,
-                              ),
                               decoration: InputDecoration(
-                                labelText: 'Host Port',
+                                labelText: 'Container Port',
                               ),
                               onChanged: (value) => controller.setPortAt(
                                   index, controller.ports[index].item1, value),
