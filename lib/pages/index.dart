@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:math';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fodman/component/sliver_header.dart';
+import 'package:fodman/linux/desktop_entry.dart';
 import 'package:fodman/pages/containers/container_list.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/initialize_machine/initialize_machine.dart';
@@ -40,6 +41,79 @@ class IndexPage extends StatelessWidget {
       Tuple3("Create Volume", createVolumePage, Icons.add),
     ];
     const networks = <Tuple3<String, String, IconData>>[];
+
+    var linuxWidgets = [
+      SliverToBoxAdapter(
+        child: SizedBox(
+          height: 12.0,
+        ),
+      ),
+      SliverPersistentHeader(
+        delegate: SliverHeader("linux"),
+      ),
+      SliverToBoxAdapter(
+        child: SizedBox(
+          height: 12.0,
+        ),
+      ),
+      SliverToBoxAdapter(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: backgroundColor,
+            ),
+            onPressed: () async {
+              var result = await createDesktopEntry();
+              if (result.item2.isNotEmpty) {
+                await showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("error"),
+                    content: Text(result.item2),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Get.back(),
+                        child: Text("ok"),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                await showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("success"),
+                    content: Text(result.item2),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Get.back(),
+                        child: Text("created"),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+            child: Container(
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.35, 0, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(Icons.create),
+                  SizedBox(
+                    width: 12.0,
+                  ),
+                  Text("Create Desktop Entry"),
+                  Spacer(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    ];
 
     return Scaffold(
       body: Container(
@@ -304,6 +378,7 @@ class IndexPage extends StatelessWidget {
                     .toList(),
               ),
             ),
+            ...(Platform.isLinux ? linuxWidgets : []),
           ],
         ),
       ),
