@@ -87,6 +87,22 @@ I will add a option create desktop entry for linux.
 2. will add:
    1. push image to remote registry
 
+### volume
+
+1. support:
+   1. create volume
+   2. remove volume
+2. will add:
+   1. graph view
+
+### network
+
+1. support:
+2. will add:
+   1. create network
+   2. remove network
+   3. graph view
+
 ## galary
 
 [link](https://github.com/snowmerak/fodman/blob/main/galaray/readme.md)
