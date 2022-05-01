@@ -10,6 +10,8 @@ import 'package:fodman/pages/local_image/local_image_detail.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
+import 'package:fodman/pages/volume/create_volume.dart';
+import 'package:fodman/pages/volume/volume_list.dart';
 import 'package:fodman/podman/config.dart';
 import 'package:get/get.dart';
 
@@ -50,6 +52,8 @@ class Main extends StatelessWidget {
         GetPage(
             name: initializeMachinePage, page: () => InitializeMachinePage()),
         GetPage(name: containerListPage, page: () => ContainerListPage()),
+        GetPage(name: volumeListPage, page: () => VolumeListPage()),
+        GetPage(name: createVolumePage, page: () => CreateVolumePage()),
       ],
     );
   }

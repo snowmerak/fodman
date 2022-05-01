@@ -10,6 +10,8 @@ import 'package:fodman/pages/initialize_machine/initialize_machine.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
+import 'package:fodman/pages/volume/create_volume.dart';
+import 'package:fodman/pages/volume/volume_list.dart';
 import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
 
@@ -33,6 +35,11 @@ class IndexPage extends StatelessWidget {
       Tuple3("Local Images", localImageListPage, Icons.list),
       Tuple3("Search Image", remoteImageListPage, Icons.search),
     ];
+    const volumes = <Tuple3<String, String, IconData>>[
+      Tuple3("Volume List", volumeListPage, Icons.list),
+      Tuple3("Create Volume", createVolumePage, Icons.add),
+    ];
+    const networks = <Tuple3<String, String, IconData>>[];
 
     return Scaffold(
       body: Container(
@@ -160,6 +167,108 @@ class IndexPage extends StatelessWidget {
             SliverList(
               delegate: SliverChildListDelegate(
                 images
+                    .map(
+                      (e) => Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: backgroundColor,
+                          ),
+                          onPressed: () => Get.toNamed(e.item2),
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.35,
+                                0,
+                                0,
+                                0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(e.item3),
+                                SizedBox(
+                                  width: 12.0,
+                                ),
+                                Text(e.item1),
+                                Spacer(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("volumes"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                volumes
+                    .map(
+                      (e) => Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: backgroundColor,
+                          ),
+                          onPressed: () => Get.toNamed(e.item2),
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.35,
+                                0,
+                                0,
+                                0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(e.item3),
+                                SizedBox(
+                                  width: 12.0,
+                                ),
+                                Text(e.item1),
+                                Spacer(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("networks"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                networks
                     .map(
                       (e) => Container(
                         margin: EdgeInsets.all(12.0),
