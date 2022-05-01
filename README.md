@@ -54,8 +54,7 @@ unzip the zip file to application folder.
 1. unzip the zip file to `$HOME/fodman/bin`.
 2. add `$HOME/fodman/bin` to path variable.
 3. run `fodman` on your terminal app.
-
-I will add a option create desktop entry for linux.
+4. if you want to create desktop entry, click the `create desktop entry` button.
 
 ## Features
 
