@@ -56,7 +56,51 @@ class VolumeListPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Text("")
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () async {
+                              var result = await controller.removeVolume(
+                                  controller.list[index].name ?? "");
+                              if (result.item1.isEmpty) {
+                                await showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(result.item2),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("OK"),
+                                        onPressed: () => Get.back(),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                await showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Success"),
+                                    content: Text("Volume removed"),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("OK"),
+                                        onPressed: () => Get.back(),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                              controller.loadVolumes();
+                            },
+                            child: Text(
+                              "REMOVE",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   );
                 }, childCount: controller.list.length),

@@ -26,8 +26,4 @@ class CreateVolumeController extends GetxController {
       String name, List<Tuple2<String, String>> labels) async {
     return await podman.createVolume(name, labels);
   }
-
-  Future<Tuple2<String, String>> removeVolume(String name) async {
-    return await podman.removeVolume(name);
-  }
 }
