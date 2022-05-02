@@ -19,7 +19,7 @@ import 'pages/index.dart';
 
 void main() {
   if (Platform.isMacOS) {
-    podmanExec = "/usr/local/bin/podman";
+    findPodman();
   }
   runApp(const Main());
 }
