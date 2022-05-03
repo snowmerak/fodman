@@ -9,7 +9,7 @@ import 'package:fodman/pages/initialize_machine/initialize_machine.dart';
 import 'package:fodman/pages/local_image/local_image_detail.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/local_machine/local_machine_list.dart';
-import 'package:fodman/pages/local_network/local_network_list.dart';
+import 'package:fodman/pages/network/local_network_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:fodman/pages/volume/create_volume.dart';
 import 'package:fodman/pages/volume/volume_list.dart';

@@ -117,3 +117,41 @@ Future<Tuple2<String, String>> removeNetwork(String name) async {
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
 }
+
+Future<Tuple2<String, String>> createNetwork(String name,
+    {bool disableDNS = false,
+    String driver = "bridge",
+    List<String> gateways = const [],
+    List<String> subnets = const [],
+    bool ipv6Enabled = false,
+    bool internal = false,
+    String ipamDriver = "host-local"}) async {
+  var args = <String>[];
+  args.add("network");
+  args.add("create");
+  args.add(name);
+  args.add("--driver");
+  args.add(driver);
+  if (disableDNS) {
+    args.add("--disable-dns");
+  }
+  if (ipv6Enabled) {
+    args.add("--ipv6");
+  }
+  if (internal) {
+    args.add("--internal");
+  }
+  args.add("--ipam-driver");
+  args.add(ipamDriver);
+  for (var subnet in subnets) {
+    args.add("--subnet");
+    args.add(subnet);
+  }
+  for (var gateway in gateways) {
+    args.add("--gateway");
+    args.add(gateway);
+  }
+  var result = await Process.run("podman", args,
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return Tuple2(result.stdout, result.stderr);
+}
