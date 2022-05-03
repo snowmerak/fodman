@@ -19,6 +19,10 @@ Future<Tuple2<String, String>> createDesktopEntry() async {
       "/.local/share/applications/fodman.desktop";
   try {
     var file = File(dst);
+    if (await file.exists()) {
+      await file.delete();
+    }
+    await file.create();
     await file.writeAsString(content, flush: true);
   } catch (e) {
     return Tuple2("", e.toString());
