@@ -15,8 +15,10 @@ Future<Tuple2<String, String>> createDesktopEntry() async {
     "Exec=$cur",
     "",
   ].join("\n");
-  var dst = (Platform.environment["HOME"] ?? "/usr/local/bin") +
-      "/.local/share/applications/fodman.desktop";
+  var dst = Platform.environment["HOME"] != null
+      ? Platform.environment["HOME"]! +
+          "/.local/share/applications/fodman.desktop"
+      : "/usr/local/bin";
   try {
     var file = File(dst);
     if (await file.exists()) {
