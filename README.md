@@ -28,14 +28,8 @@ see the document: [link](https://podman.io/getting-started/installation)
 
 I recommend to compile fodman from source code.
 Now, fodman is in testing.  
-I cannot compile daily.  
+I cannot compile day by day.  
 sorry.
-
----
-
-~#### python script~
-
-~`curl https://gist.githubusercontent.com/snowmerak/f6264e525054ae20a87cc40227c86e63/raw/install_fodman.py | python3`~
 
 ---
 
