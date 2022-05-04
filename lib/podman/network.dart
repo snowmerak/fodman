@@ -154,6 +154,8 @@ Future<Tuple2<String, String>> createNetwork(String name,
     args.add("--label");
     args.add("${label.item1}=${label.item2}");
   }
+  args.add("--log-level");
+  args.add("error");
   var result = await Process.run("podman", args,
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
