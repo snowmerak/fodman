@@ -23,7 +23,7 @@ class Container {
   int? pid;
   String? pod;
   String? podName;
-  List<int>? ports;
+  List<Map<String, dynamic>>? ports;
   int? startedAt;
   String? state;
   String? status;
@@ -71,7 +71,7 @@ class Container {
     pid = json['Pid'];
     pod = json['Pod'];
     podName = json['PodName'];
-    ports = json['Ports'];
+    ports = json['Ports']?.cast<Map<String, dynamic>>() ?? [];
     startedAt = json['StartedAt'];
     state = json['State'];
     status = json['Status'];
@@ -93,9 +93,7 @@ class Container {
     data['Labels'] = labels;
     data['Mounts'] = mounts;
     data['Names'] = names;
-    if (networks != null) {
-      data['Networks'] = networks ?? <String>[];
-    }
+    data['Networks'] = networks ?? <String>[];
     data['Pid'] = pid;
     data['Pod'] = pod;
     data['PodName'] = podName;

@@ -31,132 +31,234 @@ class ContainerListPage extends StatelessWidget {
                     title: Text(controller.list[index].id ?? "no id"),
                     subtitle: Text(controller.list[index].image ?? "no image"),
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Table(
+                        columnWidths: {
+                          0: FlexColumnWidth(1.0),
+                          1: FlexColumnWidth(4.0),
+                        },
+                        border: TableBorder(
+                          horizontalInside: BorderSide(
+                            width: 1.0,
+                            color: Colors.white12,
+                          ),
+                        ),
                         children: [
-                          Text("Names: "),
-                          Text(controller.list[index].names?.join("\n") ??
-                              "no name"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("State: "),
-                          Text(controller.list[index].state?.toString() ??
-                              "no state"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Status: "),
-                          Text(controller.list[index].status?.toString() ??
-                              "no status"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Command: "),
-                          Text(controller.list[index].command?.join(" ") ??
-                              "no command"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Ports: "),
-                          Text(controller.list[index].ports?.join("\n") ??
-                              "no ports"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Mounts: "),
-                          Text(controller.list[index].mounts?.join("\n") ??
-                              "no mounts"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Networks: "),
-                          Text(controller.list[index].networks?.join("\n") ??
-                              "no networks"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Labels: "),
-                          Text(controller.list[index].labels?.entries
-                                  .map((e) => "${e.key}: ${e.value}")
-                                  .join("\n") ??
-                              "no labels"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Pod: "),
-                          Text(controller.list[index].pod ?? "no pod"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("PodName: "),
-                          Text(controller.list[index].podName ?? "no podName"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("CreatedAt: "),
-                          Text(controller.list[index].createdAt?.toString() ??
-                              "no createdAt"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("StartedAt: "),
-                          Text(controller.list[index].startedAt?.toString() ??
-                              "no startedAt"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Exited: "),
-                          Text(controller.list[index].exited?.toString() ??
-                              "no exited"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("ExitCode: "),
-                          Text(controller.list[index].exitCode?.toString() ??
-                              "no exitCode"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("AutoRemove: "),
-                          Text(controller.list[index].autoRemove?.toString() ??
-                              "?"),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("PID: "),
-                          Text(controller.list[index].pid?.toString() ??
-                              "no pid"),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Name"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].names?.join("\n") ??
+                                        "no id"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("State"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].state ?? "no state"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Status"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].status ??
+                                    "no status"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Command"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].command?.join(" ") ??
+                                        "no command"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Ports"),
+                              ),
+                              TableCell(
+                                child: Table(
+                                  border: TableBorder(
+                                    horizontalInside: BorderSide(
+                                      width: 1.0,
+                                      color: Colors.white12,
+                                    ),
+                                  ),
+                                  children: [
+                                        TableRow(
+                                          children: [
+                                            TableCell(
+                                              child: Text("Host IP"),
+                                            ),
+                                            TableCell(
+                                              child: Text("Container Port"),
+                                            ),
+                                            TableCell(
+                                              child: Text("Host Port"),
+                                            ),
+                                            TableCell(
+                                              child: Text("Range"),
+                                            ),
+                                            TableCell(
+                                              child: Text("Protocol"),
+                                            ),
+                                          ],
+                                        )
+                                      ] +
+                                      (controller.list[index].ports
+                                              ?.map(
+                                                (e) => TableRow(
+                                                  children: e.entries
+                                                      .map(
+                                                        (e) => TableCell(
+                                                          child: Text(
+                                                              "${e.value}"),
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                ),
+                                              )
+                                              .toList() ??
+                                          []),
+                                ),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Mounts"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].mounts?.join("\n") ??
+                                        "no mounts"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Networks"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].networks
+                                        ?.join("\n") ??
+                                    "no networks"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Pod"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].pod ?? "no pod"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Pod Name"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].podName ??
+                                    "no podName"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Created At"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].createdAt ??
+                                    "no createdAt"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Started At"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].startedAt
+                                        ?.toString() ??
+                                    "no startedAt"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Exited"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].exited?.toString() ??
+                                        "no exited"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Exit Code"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].exitCode
+                                        ?.toString() ??
+                                    "no exitCode"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Auto Remove"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].autoRemove
+                                        ?.toString() ??
+                                    "no autoRemove"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("PID"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].pid?.toString() ??
+                                        "no pid"),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                       Row(
