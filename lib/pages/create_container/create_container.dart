@@ -656,7 +656,8 @@ class CreateContainerPage extends StatelessWidget {
                       buffer.add("--memory=$memory$unit");
                     }
                     for (var value in portListController.ports) {
-                      buffer.add("-p ${value.item1}:${value.item2}");
+                      buffer.add("-p");
+                      buffer.add("${value.item1}:${value.item2}");
                     }
                     for (var value in mountListController.binds) {
                       buffer.add(
