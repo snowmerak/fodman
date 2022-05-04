@@ -31,22 +31,148 @@ class LocalMachineListPage extends StatelessWidget {
                     expandedAlignment: Alignment.topLeft,
                     expandedCrossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("cpus: ${controller.machines[index].cPUs}"),
-                      Text(
-                          "memory: ${int.parse(controller.machines[index].memory ?? '0') / 1e+6} MB"),
-                      Text(
-                          "disk: ${int.parse(controller.machines[index].diskSize ?? '0') / 1e+9} GB"),
-                      Text(
-                          "is default: ${controller.machines[index].defaults}"),
-                      Text("is running: ${controller.machines[index].running}"),
-                      Text("lastup: ${controller.machines[index].lastUp}"),
-                      Text("created: ${controller.machines[index].created}"),
-                      Text("VM type: ${controller.machines[index].vMType}"),
-                      Text(
-                          "remote username: ${controller.machines[index].remoteUsername}"),
-                      Text("stream: ${controller.machines[index].stream}"),
-                      Text(
-                          "identity Path: ${controller.machines[index].identityPath}"),
+                      Table(
+                        columnWidths: {
+                          0: FlexColumnWidth(1.0),
+                          1: FlexColumnWidth(4.0),
+                        },
+                        border: TableBorder(
+                          horizontalInside:
+                              BorderSide(color: Colors.white12, width: 1.0),
+                        ),
+                        children: [
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("CPUs"),
+                              ),
+                              TableCell(
+                                child: Text(controller.machines[index].cPUs
+                                        ?.toRadixString(10) ??
+                                    ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Memory"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    "${int.parse(controller.machines[index].memory ?? '0') / 1e+9} GB"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Disk"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    "${int.parse(controller.machines[index].diskSize ?? '0') / 1e+9} GB"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Is Default"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    (controller.machines[index].defaults ??
+                                            false)
+                                        ? "Yes"
+                                        : "No"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Is Running"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    (controller.machines[index].running ??
+                                            false)
+                                        ? "Yes"
+                                        : "No"),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Last Up"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.machines[index].lastUp ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Created At"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.machines[index].created ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("VM type"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.machines[index].vMType ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Remote Username"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.machines[index].remoteUsername ??
+                                        ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Stream"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.machines[index].stream ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Identity Path"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.machines[index].identityPath ??
+                                        ""),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
