@@ -10,7 +10,7 @@ A GUI client for podman and podman remote client.
 
 #### windows
 
-`winget podman`
+`winget install podman`
 
 #### macos
 
