@@ -34,25 +34,81 @@ class VolumeListPage extends StatelessWidget {
                     title: Text(controller.list[index].name ?? ""),
                     subtitle: Text(controller.list[index].mountpoint ?? ""),
                     children: [
-                      Text("driver: ${controller.list[index].driver ?? ''}"),
-                      Text("scope: ${controller.list[index].scope ?? ''}"),
-                      Text(
-                          "created at: ${controller.list[index].createdAt ?? ''}"),
-                      Text(
-                          "mount count: ${controller.list[index].mountCount ?? -1}"),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Table(
+                        columnWidths: {
+                          0: FlexColumnWidth(1.0),
+                          1: FlexColumnWidth(4.0),
+                        },
+                        border: TableBorder(
+                          horizontalInside: BorderSide(
+                            color: Colors.white12,
+                            width: 1.0,
+                          ),
+                        ),
                         children: [
-                          Text("labels: "),
-                          Expanded(
-                            child: Column(
-                              children: (controller.list[index].labels ?? {})
-                                  .entries
-                                  .map(
-                                    (e) => Text("${e.key}: ${e.value}"),
-                                  )
-                                  .toList(),
-                            ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Driver"),
+                              ),
+                              TableCell(
+                                child:
+                                    Text(controller.list[index].driver ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Scope"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].scope ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Create At"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.list[index].createdAt ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Mount Count"),
+                              ),
+                              TableCell(
+                                child: Text(controller.list[index].mountCount
+                                        ?.toRadixString(10) ??
+                                    ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Labels"),
+                              ),
+                              TableCell(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children:
+                                      (controller.list[index].labels ?? {})
+                                          .entries
+                                          .map(
+                                            (e) => Text("${e.key}: ${e.value}"),
+                                          )
+                                          .toList(),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
