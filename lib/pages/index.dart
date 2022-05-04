@@ -10,6 +10,7 @@ import 'package:fodman/pages/create_container/create_container.dart';
 import 'package:fodman/pages/initialize_machine/initialize_machine.dart';
 import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/local_machine/local_machine_list.dart';
+import 'package:fodman/pages/network/create_network.dart';
 import 'package:fodman/pages/network/local_network_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:fodman/pages/volume/create_volume.dart';
@@ -43,6 +44,7 @@ class IndexPage extends StatelessWidget {
     ];
     const networks = <Tuple3<String, String, IconData>>[
       Tuple3("Network List", localNetworkListPage, Icons.list),
+      Tuple3("Create Network", createNetworkPage, Icons.add),
     ];
 
     var linuxWidgets = [

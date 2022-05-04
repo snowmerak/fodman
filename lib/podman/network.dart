@@ -125,7 +125,8 @@ Future<Tuple2<String, String>> createNetwork(String name,
     List<String> subnets = const [],
     bool ipv6Enabled = false,
     bool internal = false,
-    String ipamDriver = "host-local"}) async {
+    String ipamDriver = "host-local",
+    List<Tuple2<String, String>> labels = const []}) async {
   var args = <String>[];
   args.add("network");
   args.add("create");
@@ -141,8 +142,6 @@ Future<Tuple2<String, String>> createNetwork(String name,
   if (internal) {
     args.add("--internal");
   }
-  args.add("--ipam-driver");
-  args.add(ipamDriver);
   for (var subnet in subnets) {
     args.add("--subnet");
     args.add(subnet);
@@ -150,6 +149,10 @@ Future<Tuple2<String, String>> createNetwork(String name,
   for (var gateway in gateways) {
     args.add("--gateway");
     args.add(gateway);
+  }
+  for (var label in labels) {
+    args.add("--label");
+    args.add("${label.item1}=${label.item2}");
   }
   var result = await Process.run("podman", args,
       workingDirectory: Platform.environment["HOME"], runInShell: true);
