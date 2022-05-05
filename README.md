@@ -91,10 +91,10 @@ unzip the zip file to application folder.
 ### network
 
 1. support:
-2. will add:
    1. create network
-   2. remove network
-   3. graph view
+   2. network list and remove
+2. will add:
+   1. graph view
 
 ## galary
 
