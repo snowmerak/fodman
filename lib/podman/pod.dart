@@ -25,10 +25,10 @@ Future<Tuple2<String, String>> createPod(
     args.add("--add-host");
     args.addAll(hosts.map((e) => "${e.item1}:${e.item2}"));
   }
-  if (cpus != 0) {
-    args.add("--cpus");
-    args.add("$cpus");
-  }
+  // if (cpus != 0) {
+  //   args.add("--cpus");
+  //   args.add("$cpus");
+  // }
   if (devices.isNotEmpty) {
     args.add("--device");
     args.addAll(devices.map((e) => "${e.item1}:${e.item2}"));
@@ -50,17 +50,24 @@ Future<Tuple2<String, String>> createPod(
     args.add(networkMode);
   }
   if (ports.isNotEmpty) {
-    args.add("--publish");
-    args.addAll(ports.map((e) => "${e.item1}:${e.item2}"));
+    for (var element in ports) {
+      args.add("--publish");
+      args.add("${element.item1}:${element.item2}");
+    }
   }
   if (volumes.isNotEmpty) {
-    args.add("--volume");
-    args.addAll(volumes.map((e) => "${e.item1}:${e.item2}"));
+    for (var element in volumes) {
+      args.add("--volume");
+      args.add("${element.item1}:${element.item2}");
+    }
   }
   if (labels.isNotEmpty) {
-    args.add("--label");
-    args.addAll(labels.map((e) => "${e.item1}=${e.item2}"));
+    for (var element in labels) {
+      args.add("--label");
+      args.add("${element.item1}=${element.item2}");
+    }
   }
+  args.add("--name");
   args.add(name);
   var result = await Process.run("podman", args,
       workingDirectory: Platform.environment["HOME"], runInShell: true);

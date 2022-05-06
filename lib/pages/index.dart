@@ -12,6 +12,7 @@ import 'package:fodman/pages/local_image/local_image_list.dart';
 import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/network/create_network.dart';
 import 'package:fodman/pages/network/local_network_list.dart';
+import 'package:fodman/pages/pods/create_pod.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:fodman/pages/volume/create_volume.dart';
 import 'package:fodman/pages/volume/volume_list.dart';
@@ -29,6 +30,9 @@ class IndexPage extends StatelessWidget {
       Tuple3("Local Machines", localMachineListPage, Icons.list),
       Tuple3(
           "Initialize Machine", initializeMachinePage, Icons.create_new_folder),
+    ];
+    const pods = <Tuple3<String, String, IconData>>[
+      Tuple3("Create Pod", createPodPage, Icons.add),
     ];
     const containers = <Tuple3<String, String, IconData>>[
       Tuple3("Container List", containerListPage, Icons.list),
@@ -144,6 +148,58 @@ class IndexPage extends StatelessWidget {
             SliverList(
               delegate: SliverChildListDelegate(
                 machines
+                    .map(
+                      (e) => Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: backgroundColor,
+                          ),
+                          onPressed: () => Get.toNamed(e.item2),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.20,
+                                child: Row(
+                                  children: [
+                                    Icon(e.item3),
+                                    SizedBox(
+                                      width: 12.0,
+                                    ),
+                                    Text(e.item1),
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("pods"),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 12.0,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                pods
                     .map(
                       (e) => Container(
                         margin: EdgeInsets.all(12.0),
