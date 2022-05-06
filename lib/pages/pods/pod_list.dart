@@ -21,6 +21,8 @@ class PodListPage extends StatelessWidget {
           slivers: [
             SliverAppBar(
               title: Text("Pods"),
+              pinned: true,
+              floating: true,
             ),
             SliverToBoxAdapter(
               child: SizedBox(
@@ -69,18 +71,28 @@ class PodListPage extends StatelessWidget {
                                       color: Colors.white12,
                                       width: 1.0,
                                     ),
+                                    verticalInside: BorderSide(
+                                      color: Colors.white12,
+                                      width: 1.0,
+                                    ),
                                   ),
                                   children: [
                                         TableRow(
                                           children: [
                                             TableCell(
-                                              child: Text("Name"),
+                                              child: Center(
+                                                child: Text("Name"),
+                                              ),
                                             ),
                                             TableCell(
-                                              child: Text("ID"),
+                                              child: Center(
+                                                child: Text("ID"),
+                                              ),
                                             ),
                                             TableCell(
-                                              child: Text("Status"),
+                                              child: Center(
+                                                child: Text("Status"),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -90,19 +102,25 @@ class PodListPage extends StatelessWidget {
                                                 (e) => TableRow(
                                                   children: [
                                                     TableCell(
-                                                      child: Text(
-                                                          e["Names"] ?? ""),
+                                                      child: Center(
+                                                        child: Text(
+                                                            e["Names"] ?? ""),
+                                                      ),
                                                     ),
                                                     TableCell(
-                                                      child: Text(
-                                                          (e["Id"] as String?)
-                                                                  ?.substring(
-                                                                      0, 8) ??
-                                                              ""),
+                                                      child: Center(
+                                                        child: Text(
+                                                            (e["Id"] as String?)
+                                                                    ?.substring(
+                                                                        0, 8) ??
+                                                                ""),
+                                                      ),
                                                     ),
                                                     TableCell(
-                                                      child: Text(
-                                                          e["Status"] ?? ""),
+                                                      child: Center(
+                                                        child: Text(
+                                                            e["Status"] ?? ""),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -125,40 +143,86 @@ class PodListPage extends StatelessWidget {
                                       color: Colors.white12,
                                       width: 1.0,
                                     ),
+                                    verticalInside: BorderSide(
+                                      color: Colors.white12,
+                                      width: 1.0,
+                                    ),
                                   ),
                                   children: [
                                         TableRow(
                                           children: [
                                             TableCell(
-                                              child: Text("IP"),
-                                            ),
-                                            TableCell(
-                                              child: Text("IPv6"),
-                                            ),
-                                            TableCell(
-                                              child: Text("MacAddress"),
+                                              child: Center(
+                                                child: Text("Name"),
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ] +
-                                      (controller.pods[index].containers
+                                      (controller.pods[index].networks
                                               ?.map(
                                                 (e) => TableRow(
                                                   children: [
                                                     TableCell(
-                                                      child: Text(
-                                                          e["Names"] ?? ""),
+                                                      child: Center(
+                                                        child: Text(e),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                              .toList() ??
+                                          []),
+                                ),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Labels"),
+                              ),
+                              TableCell(
+                                child: Table(
+                                  border: TableBorder(
+                                    horizontalInside: BorderSide(
+                                      color: Colors.white12,
+                                      width: 1.0,
+                                    ),
+                                    verticalInside: BorderSide(
+                                      color: Colors.white12,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  children: [
+                                        TableRow(
+                                          children: [
+                                            TableCell(
+                                              child: Center(
+                                                child: Text("Key"),
+                                              ),
+                                            ),
+                                            TableCell(
+                                              child: Center(
+                                                child: Text("Value"),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ] +
+                                      (controller.pods[index].labels?.entries
+                                              .map(
+                                                (e) => TableRow(
+                                                  children: [
+                                                    TableCell(
+                                                      child: Center(
+                                                        child: Text(e.key),
+                                                      ),
                                                     ),
                                                     TableCell(
-                                                      child: Text(
-                                                          (e["Id"] as String?)
-                                                                  ?.substring(
-                                                                      0, 8) ??
-                                                              ""),
-                                                    ),
-                                                    TableCell(
-                                                      child: Text(
-                                                          e["Status"] ?? ""),
+                                                      child: Center(
+                                                        child: Text(e.value),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -190,6 +254,73 @@ class PodListPage extends StatelessWidget {
                                     Text(controller.pods[index].status ?? ""),
                               ),
                             ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Infra ID"),
+                              ),
+                              TableCell(
+                                child:
+                                    Text(controller.pods[index].infraId ?? ""),
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text("Namespace"),
+                              ),
+                              TableCell(
+                                child: Text(
+                                    controller.pods[index].namespace ?? ""),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () async {
+                              var result = await controller
+                                  .removePod(controller.pods[index].id ?? "");
+                              if (result.item1.isEmpty) {
+                                await showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(result.item2),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("OK"),
+                                        onPressed: () => Get.back(),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                await showDialog(
+                                  context: Get.overlayContext!,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Success"),
+                                    content: Text(result.item2),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("OK"),
+                                        onPressed: () => Get.back(),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                              controller.loadPods();
+                            },
+                            child: Text(
+                              "REMOVE",
+                              style: TextStyle(color: Colors.red),
+                            ),
                           ),
                         ],
                       ),

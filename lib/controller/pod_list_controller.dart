@@ -1,5 +1,6 @@
 import 'package:fodman/podman/pod.dart' as podman;
 import 'package:get/get.dart';
+import 'package:tuple/tuple.dart';
 
 class PodListController extends GetxController {
   List<podman.Pod> pods = [];
@@ -7,5 +8,10 @@ class PodListController extends GetxController {
   Future<void> loadPods() async {
     pods = await podman.getPods();
     update();
+  }
+
+  Future<Tuple2<String, String>> removePod(String name) async {
+    var result = await podman.removePod(name);
+    return result;
   }
 }

@@ -11,7 +11,7 @@ class Pod {
   String? infraId;
   String? name;
   String? namespace;
-  List<Map<String, dynamic>>? networks;
+  List<String>? networks;
   String? status;
   Map<String, String>? labels;
 
@@ -35,7 +35,7 @@ class Pod {
     infraId = json['InfraId'];
     name = json['Name'];
     namespace = json['Namespace'];
-    networks = json['Networks']?.cast<Map<String, dynamic>>() ?? [];
+    networks = json['Networks']?.cast<String>() ?? [];
     status = json['Status'];
     labels = json['Labels']?.cast<String, String>() ?? {};
   }
@@ -146,4 +146,11 @@ Future<List<Pod>> getPods() async {
   return (json.decode(result.stdout) as List<dynamic>)
       .map((e) => Pod.fromJson(e))
       .toList();
+}
+
+Future<Tuple2<String, String>> removePod(String name) async {
+  var args = ["pod", "rm", "--log-level", "error", name];
+  var result = await Process.run("podman", args,
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return Tuple2(result.stdout, result.stderr);
 }
