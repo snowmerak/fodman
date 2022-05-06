@@ -2,7 +2,7 @@
 
 A GUI client for podman and podman remote client.
 
-> currently fodman is in alpha test.
+> currently fodman is in beta test.
 
 ## Getting Started
 
@@ -25,13 +25,6 @@ A GUI client for podman and podman remote client.
 see the document: [link](https://podman.io/getting-started/installation)
 
 ### install fodman
-
-I recommend to compile fodman from source code.
-Now, fodman is in testing.  
-I cannot compile day by day.  
-sorry.
-
----
 
 visit [release page](https://github.com/snowmerak/fodman/releases) and download zip file compatible with your system.
 
