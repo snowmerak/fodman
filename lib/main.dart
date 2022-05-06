@@ -28,8 +28,8 @@ Future<void> main() async {
   }
 
   WidgetsFlutterBinding.ensureInitialized();
-  await DesktopWindow.setWindowSize(Size(1280, 860));
-  await DesktopWindow.setMinWindowSize(Size(1280, 860));
+  DesktopWindow.setWindowSize(Size(1280, 860));
+  DesktopWindow.setMinWindowSize(Size(1280, 860));
 
   runApp(const Main());
 }
