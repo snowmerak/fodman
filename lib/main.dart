@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 import 'package:fodman/pages/containers/container_list.dart';
 import 'package:fodman/pages/create_container/create_container.dart';
@@ -21,10 +22,15 @@ import 'package:get/get.dart';
 
 import 'pages/index.dart';
 
-void main() {
+Future<void> main() async {
   if (Platform.isMacOS) {
     findPodman();
   }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await DesktopWindow.setWindowSize(Size(1280, 860));
+  await DesktopWindow.setMinWindowSize(Size(1280, 860));
+
   runApp(const Main());
 }
 
