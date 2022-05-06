@@ -1,6 +1,64 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:tuple/tuple.dart';
+
+class Pod {
+  String? cgroup;
+  List<Map<String, dynamic>>? containers;
+  String? created;
+  String? id;
+  String? infraId;
+  String? name;
+  String? namespace;
+  List<Map<String, dynamic>>? networks;
+  String? status;
+  Map<String, String>? labels;
+
+  Pod(
+      {this.cgroup,
+      this.containers,
+      this.created,
+      this.id,
+      this.infraId,
+      this.name,
+      this.namespace,
+      this.networks,
+      this.status,
+      this.labels});
+
+  Pod.fromJson(Map<String, dynamic> json) {
+    cgroup = json['Cgroup'];
+    containers = json['Containers']?.cast<Map<String, dynamic>>() ?? [];
+    created = json['Created'];
+    id = json['Id'];
+    infraId = json['InfraId'];
+    name = json['Name'];
+    namespace = json['Namespace'];
+    networks = json['Networks']?.cast<Map<String, dynamic>>() ?? [];
+    status = json['Status'];
+    labels = json['Labels']?.cast<String, String>() ?? {};
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Cgroup'] = cgroup;
+    data['Containers'] = containers;
+    data['Created'] = created;
+    data['Id'] = id;
+    data['InfraId'] = infraId;
+    data['Name'] = name;
+    data['Namespace'] = namespace;
+    if (networks != null) {
+      data['Networks'] = networks!;
+    }
+    data['Status'] = status;
+    if (labels != null) {
+      data['Labels'] = labels!;
+    }
+    return data;
+  }
+}
 
 Future<Tuple2<String, String>> createPod(
   String name, {
@@ -72,4 +130,20 @@ Future<Tuple2<String, String>> createPod(
   var result = await Process.run("podman", args,
       workingDirectory: Platform.environment["HOME"], runInShell: true);
   return Tuple2(result.stdout, result.stderr);
+}
+
+Future<List<Pod>> getPods() async {
+  var args = <String>[
+    "pod",
+    "list",
+    "--format",
+    "json",
+    "--log-level",
+    "error"
+  ];
+  var result = await Process.run("podman", args,
+      workingDirectory: Platform.environment["HOME"], runInShell: true);
+  return (json.decode(result.stdout) as List<dynamic>)
+      .map((e) => Pod.fromJson(e))
+      .toList();
 }

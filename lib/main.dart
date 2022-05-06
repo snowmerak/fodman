@@ -12,6 +12,7 @@ import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/network/create_network.dart';
 import 'package:fodman/pages/network/local_network_list.dart';
 import 'package:fodman/pages/pods/create_pod.dart';
+import 'package:fodman/pages/pods/pod_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:fodman/pages/volume/create_volume.dart';
 import 'package:fodman/pages/volume/volume_list.dart';
@@ -60,6 +61,7 @@ class Main extends StatelessWidget {
         GetPage(name: localNetworkListPage, page: () => LocalNetworkListPage()),
         GetPage(name: createNetworkPage, page: () => CreateNetworkPage()),
         GetPage(name: createPodPage, page: () => CreatePodPage()),
+        GetPage(name: podListPage, page: () => PodListPage()),
       ],
     );
   }

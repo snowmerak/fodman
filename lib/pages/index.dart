@@ -13,6 +13,7 @@ import 'package:fodman/pages/local_machine/local_machine_list.dart';
 import 'package:fodman/pages/network/create_network.dart';
 import 'package:fodman/pages/network/local_network_list.dart';
 import 'package:fodman/pages/pods/create_pod.dart';
+import 'package:fodman/pages/pods/pod_list.dart';
 import 'package:fodman/pages/remote_image/remote_image_list.dart';
 import 'package:fodman/pages/volume/create_volume.dart';
 import 'package:fodman/pages/volume/volume_list.dart';
@@ -32,6 +33,7 @@ class IndexPage extends StatelessWidget {
           "Initialize Machine", initializeMachinePage, Icons.create_new_folder),
     ];
     const pods = <Tuple3<String, String, IconData>>[
+      Tuple3("Local Pods", podListPage, Icons.list),
       Tuple3("Create Pod", createPodPage, Icons.add),
     ];
     const containers = <Tuple3<String, String, IconData>>[
@@ -131,6 +133,7 @@ class IndexPage extends StatelessWidget {
           slivers: [
             SliverAppBar(
               title: Text("Fodman"),
+              centerTitle: true,
             ),
             SliverToBoxAdapter(
               child: SizedBox(
