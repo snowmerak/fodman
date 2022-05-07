@@ -18,7 +18,7 @@ class CreateNetworkPage extends StatelessWidget {
     var subnetGatewayController = Get.put(SubnetGatewayListController());
     var labelListController = Get.put(NetworkLabelController());
     var disableDNS = false;
-    const driver = 'bridge';
+    // const driver = 'bridge';
     var ipv6Enabled = false;
     var internal = false;
     var ipamDriver = 'host-local';
