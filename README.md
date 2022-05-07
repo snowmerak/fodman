@@ -62,7 +62,6 @@ unzip the zip file to application folder.
    4. container pause, unpause
    5. container commands
 2. will add:
-   1. link to pod
 
 ### images
 

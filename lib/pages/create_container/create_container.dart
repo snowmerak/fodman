@@ -13,6 +13,7 @@ import 'package:fodman/controller/local_image_controller.dart';
 import 'package:fodman/controller/create_container_controllers/memory_unit_controller.dart';
 import 'package:fodman/controller/create_container_controllers/mount_list_controller.dart';
 import 'package:fodman/controller/create_container_controllers/port_list_controller.dart';
+import 'package:fodman/controller/pod_list_controller.dart';
 import 'package:get/get.dart';
 
 const createContainerPage = '/create_container';
@@ -51,6 +52,10 @@ class CreateContainerPage extends StatelessWidget {
 
     var workdirController = TextEditingController();
     var commandController = TextEditingController();
+
+    var selectedPodController = "";
+    var podsController = Get.put(PodListController());
+    podsController.loadPods();
 
     imageNameController.text = localImageController.selectedTag ?? "";
     return Scaffold(
@@ -295,6 +300,31 @@ class CreateContainerPage extends StatelessWidget {
                     color: Colors.white,
                     icon: Icon(Icons.add),
                   ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 12.0),
+            ),
+            SliverPersistentHeader(
+              delegate: SliverHeader("Pod"),
+            ),
+            GetBuilder<PodListController>(
+              builder: (controller) => SliverToBoxAdapter(
+                child: DropdownButton<String>(
+                  value: controller.selected,
+                  items: controller.pods
+                      .map(
+                        (e) => DropdownMenuItem<String>(
+                          child: Text(e.name ?? ""),
+                          value: e.name ?? "",
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (data) {
+                    selectedPodController = data ?? "";
+                    controller.selectPod(data ?? "");
+                  },
                 ),
               ),
             ),
@@ -694,6 +724,9 @@ class CreateContainerPage extends StatelessWidget {
                     }
                     if (workdirController.text.isNotEmpty) {
                       buffer.add("--workdir=${workdirController.text}");
+                    }
+                    if (selectedPodController.isNotEmpty) {
+                      buffer.add("--pod=$selectedPodController");
                     }
                     if (imageNameController.text.isNotEmpty) {
                       buffer.add(imageNameController.text);
