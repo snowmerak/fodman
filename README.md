@@ -6,7 +6,7 @@ A GUI client for podman and podman remote client.
 
 ## Getting Started
 
-### install podman
+### install dependency, podman
 
 #### windows
 
