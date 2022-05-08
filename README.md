@@ -1,5 +1,7 @@
 # fodman
 
+![main-page](gallary/00%20main%20page.png)
+
 A GUI client for podman and podman remote client.
 
 > currently fodman is in beta test.
