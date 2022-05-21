@@ -8,6 +8,7 @@ Future<Tuple2<String, String>> createDesktopEntry() async {
   var cur = Directory.current.path + "/fodman";
   var content = [
     "[Desktop Entry]",
+    "Name=fodman",
     "Encoding=UTF-8",
     "Version=1.0",
     "Type=Application",
