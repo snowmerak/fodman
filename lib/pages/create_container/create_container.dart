@@ -720,7 +720,8 @@ class CreateContainerPage extends StatelessWidget {
                       buffer.add(optionController.interactive);
                     }
                     for (var value in environmentController.envs) {
-                      buffer.add("--env ${value.item1}=${value.item2}");
+                      buffer.add("--env");
+                      buffer.add("${value.item1}=${value.item2}");
                     }
                     if (workdirController.text.isNotEmpty) {
                       buffer.add("--workdir=${workdirController.text}");
